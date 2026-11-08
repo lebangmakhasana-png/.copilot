@@ -1,0 +1,1223 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#081426">
+  <title>NextpulseZA | Pause. Think. Learn. Grow.</title>
+  <link rel="icon" type="image/png" href="nextpulse-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #081426;
+      --ink-soft: #526176;
+      --paper: #f3f6fc;
+      --white: #ffffff;
+      --line: #dce5f2;
+      --accent: #007d9b;
+      --accent-light: #e2f6fa;
+      --yellow: #ffda3d;
+      --magenta: #d92f91;
+      --cyan: #18c9e6;
+      --shadow: 0 16px 42px rgba(8, 20, 38, .1);
+      --radius-control: 12px;
+      --radius-card: 18px;
+      --sans: "DM Sans", "Trebuchet MS", sans-serif;
+      --serif: "Fraunces", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--magenta); outline-offset: 3px; }
+    .hidden { display: none !important; }
+    .auth-screen { min-height: 100vh; display: grid; grid-template-columns: minmax(320px, .92fr) 1.08fr; }
+    .auth-side { background: var(--ink); color: white; padding: clamp(32px, 7vw, 88px); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+    .auth-side::after { content: ""; position: absolute; width: 440px; height: 440px; right: -170px; bottom: -180px; border: 1px solid rgba(255,255,255,.15); border-radius: 50%; box-shadow: 0 0 0 36px rgba(255,255,255,.025), 0 0 0 74px rgba(255,255,255,.025), 0 0 0 112px rgba(255,255,255,.025); }
+    .brand { display: inline-flex; gap: 11px; align-items: center; font-weight: 700; letter-spacing: 0; }
+    .auth-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; position: relative; z-index: 1; }
+    .brand-mark { width: 38px; height: 38px; border-radius: 10px; background: #020816; object-fit: cover; flex: 0 0 auto; }
+    .auth-copy { max-width: 470px; position: relative; z-index: 1; padding: 48px 0; }
+    .eyebrow { text-transform: uppercase; font-size: 11px; letter-spacing: 1.3px; font-weight: 700; color: var(--accent); }
+    .auth-side .eyebrow { color: var(--yellow); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0; }
+    .auth-copy h1 { font-size: clamp(42px, 5.2vw, 68px); line-height: 1.02; margin: 20px 0; max-width: 490px; }
+    .auth-copy p { color: #d8e6f5; max-width: 410px; font-size: 17px; }
+    .auth-illustration { height: 190px; margin-top: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,.2); border-radius: 18px; background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.025)); }
+    .auth-illustration svg { width: 100%; height: 100%; display: block; }
+    .bag-float { transform-box: fill-box; transform-origin: center bottom; animation: bag-float 3s ease-in-out infinite; }
+    .bag-tag { transform-box: fill-box; transform-origin: top center; animation: tag-swing 3s ease-in-out infinite; }
+    @keyframes bag-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+    @keyframes tag-swing { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(8deg); } }
+    .auth-note { font-size: 12px; color: #b8c8dd; position: relative; z-index: 1; }
+    .auth-main { display: grid; place-items: center; padding: 32px; }
+    .auth-card { width: min(100%, 430px); }
+    .auth-card h2 { font-size: 32px; margin: 0 0 7px; }
+    .muted { color: var(--ink-soft); }
+    .google-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 11px; border: 1px solid #cbd6e7; border-radius: var(--radius-control); padding: 11px 16px; background: white; color: var(--ink); font-weight: 700; }
+    .google-btn:hover { background: #f8fafc; border-color: #9eacc1; }
+    .google-mark { width: 18px; height: 18px; flex: 0 0 auto; }
+    .auth-divider { display: flex; align-items: center; gap: 12px; color: var(--ink-soft); font-size: 12px; margin: 17px 0; }
+    .auth-divider::before, .auth-divider::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+    .confirmation-screen { min-height: 100vh; display: grid; place-items: center; padding: 28px 18px; background: radial-gradient(ellipse at 50% 0, #e2f6fa, var(--paper) 60%); }
+    .confirmation-card { width: min(100%, 540px); overflow: hidden; border: 1px solid var(--line); border-radius: 24px; background: white; box-shadow: var(--shadow); }
+    .confirmation-header { padding: 24px 26px 18px; border-bottom: 1px solid var(--line); }
+    .confirmation-topline { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .confirmation-header .brand { margin: 0; }
+    .confirmation-header h1 { font-size: clamp(29px, 7vw, 38px); line-height: 1.08; margin: 6px 0; }
+    .confirmation-header p { color: var(--ink-soft); margin: 0; }
+    .confirmation-status { display: flex; align-items: center; gap: 10px; margin-top: 16px; padding: 10px 12px; border-radius: 11px; background: var(--accent-light); color: var(--ink); font-size: 13px; font-weight: 700; }
+    .status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(0,125,155,.12); }
+    .story-stage { min-height: 255px; display: grid; align-content: center; justify-items: center; text-align: center; padding: 26px; background: #fff9df; }
+    .story-scene { width: 100%; animation: appear .32s ease both; }
+    .story-illustration { width: 88px; height: 88px; display: grid; place-items: center; margin: 0 auto 15px; border-radius: 28px; background: var(--yellow); font-size: 42px; }
+    .story-stage h2 { font-size: 25px; margin: 5px 0 8px; }
+    .story-stage p { max-width: 390px; margin: 0 auto; color: var(--ink-soft); }
+    .story-footer { padding: 18px 26px 22px; }
+    .story-progress { display: flex; gap: 6px; margin-bottom: 14px; }
+    .story-progress span { height: 4px; flex: 1; border-radius: 5px; background: #e7edf7; }
+    .story-progress span.active { background: var(--accent); }
+    .story-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .story-actions .quiet-btn { color: var(--ink-soft); font-weight: 700; }
+    .confirmation-note { margin: 12px 0 0; color: var(--ink-soft); font-size: 11px; text-align: center; }
+    .auth-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #e7edf7; border-radius: var(--radius-control); padding: 4px; margin: 24px 0 22px; }
+    .auth-switch button { background: transparent; border: 0; color: var(--ink-soft); padding: 10px; border-radius: 9px; font-weight: 700; }
+    .auth-switch button.active { background: white; color: var(--ink); box-shadow: 0 2px 6px rgba(8,20,38,.1); }
+    .field { display: grid; gap: 6px; margin: 14px 0; }
+    .field label { font-size: 13px; font-weight: 700; }
+    .field input, .field select, .field textarea { border: 1px solid #cbd6e7; border-radius: var(--radius-control); background: white; padding: 12px 13px; color: var(--ink); min-width: 0; }
+    .field textarea { min-height: 110px; resize: vertical; }
+    .small-print { font-size: 12px; color: var(--ink-soft); }
+    .btn { border: 0; border-radius: var(--radius-control); padding: 11px 16px; background: var(--accent); color: white; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: background .18s, transform .18s; }
+    .btn:hover { background: #00647e; transform: translateY(-1px); }
+    .btn.full { width: 100%; margin-top: 7px; }
+    .btn.secondary { background: #e4f1f7; color: var(--ink); }
+    .btn.secondary:hover { background: #d5e9f2; }
+    .btn.coral { background: var(--magenta); color: white; }
+    .app-shell { display: grid; min-height: 100vh; grid-template-columns: 235px minmax(0, 1fr); }
+    .sidebar { background: var(--ink); color: white; padding: 23px 15px; display: flex; flex-direction: column; }
+    .sidebar .brand { padding: 0 12px 28px; }
+    .sidebar nav { display: grid; gap: 5px; }
+    .nav-btn { border: 0; background: transparent; color: #c8d5e6; border-radius: var(--radius-control); padding: 11px 12px; text-align: left; font-weight: 600; display: flex; align-items: center; gap: 11px; }
+    .nav-btn:hover, .nav-btn.active { color: var(--cyan); background: rgba(24,201,230,.14); }
+    .nav-icon { width: 19px; text-align: center; font-size: 17px; }
+    .sidebar-bottom { margin-top: auto; padding: 14px 10px 0; border-top: 1px solid rgba(255,255,255,.15); }
+    .profile-line { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 13px; }
+    .avatar { width: 33px; height: 33px; display: grid; place-items: center; border-radius: 50%; background: var(--yellow); color: var(--ink); font-weight: 700; flex: 0 0 auto; }
+    .quiet-btn { background: transparent; border: 0; color: #c8d5e6; padding: 6px 0; font-size: 12px; }
+    .main { min-width: 0; }
+    .topbar { height: 67px; padding: 0 34px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,.82); }
+    .topbar .date { font-size: 13px; color: var(--ink-soft); }
+    .topbar-right { display: flex; align-items: center; gap: 13px; }
+    .topbar-right .avatar { width: 32px; height: 32px; }
+    .profile-trigger { border: 0; padding: 0; }
+    .profile-trigger:hover { box-shadow: 0 0 0 3px rgba(24,201,230,.28); }
+    .topbar-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .circle-back { width: 40px; height: 40px; flex: 0 0 auto; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--white); color: var(--ink); font-size: 23px; line-height: 1; cursor: pointer; transition: background .18s, transform .18s; }
+    .circle-back:hover:not(:disabled) { background: var(--accent-light); transform: translateX(-2px); }
+    .circle-back:disabled { opacity: .48; cursor: default; }
+    .dialog-back { margin-right: 1px; }
+    .profile-dialog { width: min(100% - 32px, 620px); max-height: min(90vh, 820px); overflow: auto; padding: 0; border: 1px solid var(--line); border-radius: 22px; background: var(--white); color: var(--ink); box-shadow: 0 24px 70px rgba(8,20,38,.25); }
+    .profile-dialog::backdrop { background: rgba(8,20,38,.58); backdrop-filter: blur(3px); }
+    .profile-settings { padding: clamp(20px, 5vw, 30px); }
+    .profile-settings-header { display: flex; justify-content: space-between; align-items: start; gap: 16px; margin-bottom: 18px; }
+    .profile-settings-header h2 { font-size: 30px; margin: 4px 0; }
+    .profile-settings-header p { color: var(--ink-soft); margin: 0; }
+    .dialog-close { border: 0; border-radius: 50%; width: 38px; height: 38px; background: #e7edf7; color: var(--ink); font-size: 21px; }
+    .settings-profile { display: grid; justify-items: center; text-align: center; padding: 4px 0 18px; }
+    .settings-avatar { width: 76px; height: 76px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(145deg, #d9d4ff, #6674d8); color: white; font-size: 38px; font-weight: 500; }
+    .settings-profile h3 { font: 700 21px var(--sans); margin: 10px 0 1px; }
+    .settings-profile p { margin: 0; color: var(--ink-soft); overflow-wrap: anywhere; }
+    .whatsapp-btn { width: 100%; margin: 2px 0 10px; padding: 13px 16px; border: 0; border-radius: 15px; background: #08695d; color: white; font-weight: 700; }
+    .whatsapp-btn:hover { background: #07574e; }
+    .settings-section { border-top: 1px solid var(--line); padding: 18px 0 4px; margin-top: 14px; }
+    .settings-section-title { margin: 0 0 8px; color: var(--ink-soft); font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+    .settings-row { min-height: 65px; display: flex; align-items: center; gap: 13px; padding: 10px 3px; border-bottom: 1px solid var(--line); }
+    .settings-row:last-child { border-bottom: 0; }
+    .settings-icon { width: 26px; flex: 0 0 26px; text-align: center; font-size: 19px; }
+    .settings-row-copy { flex: 1; min-width: 0; }
+    .settings-row-copy strong { display: block; font-size: 15px; }
+    .settings-row-copy small { display: block; color: var(--ink-soft); font-size: 12px; line-height: 1.4; }
+    .settings-row select { max-width: 145px; border: 1px solid var(--line); border-radius: 9px; background: var(--white); color: var(--ink); padding: 8px 26px 8px 9px; }
+    .setting-status { color: #21865b; font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .settings-action { border: 0; background: transparent; color: var(--ink); text-align: left; }
+    .settings-action:hover .settings-row-copy strong { color: var(--accent); }
+    .settings-toggle { width: 42px; height: 24px; flex: 0 0 auto; appearance: none; border: 0; border-radius: 20px; background: #c9c4c6; cursor: pointer; transition: background .2s; }
+    .settings-toggle::before { content: ""; display: block; width: 18px; height: 18px; margin: 3px; border-radius: 50%; background: white; transition: transform .2s; }
+    .settings-toggle:checked { background: #35a873; }
+    .settings-toggle:checked::before { transform: translateX(18px); }
+    .mode-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 4px; border-radius: 13px; background: #f2e7e1; }
+    .mode-switch button { border: 0; border-radius: 10px; padding: 10px; background: transparent; color: var(--ink-soft); font-weight: 700; }
+    .mode-switch button.active { background: var(--white); color: var(--ink); box-shadow: 0 2px 6px rgba(8,20,38,.09); }
+    .theme-list { display: grid; grid-auto-columns: minmax(128px, 1fr); grid-auto-flow: column; gap: 9px; overflow-x: auto; padding: 3px 1px 8px; }
+    .theme-choice { min-width: 0; border: 2px solid transparent; border-radius: 12px; padding: 6px; background: transparent; color: var(--ink); text-align: left; }
+    .theme-choice.active { border-color: var(--accent); }
+    .theme-preview { height: 104px; display: flex; flex-direction: column; justify-content: end; gap: 6px; padding: 10px; border-radius: 9px; overflow: hidden; background: linear-gradient(165deg, #fff4e9 0%, #ffe1d8 63%, #b98bea 78%, #2c9b8f 100%); }
+    .theme-preview span { width: 72%; height: 5px; border-radius: 5px; background: rgba(53,42,50,.42); }
+    .theme-preview span:nth-child(2) { width: 48%; }
+    .theme-preview span:nth-child(3) { width: 82%; height: 23px; border-radius: 8px; background: rgba(255,255,255,.82); }
+    .theme-preview span:nth-child(4) { width: 57%; height: 11px; border: 3px solid #342a35; background: #ffdcaa; }
+    .theme-choice[data-theme="lavender"] .theme-preview { background: linear-gradient(165deg, #fff4e9 0%, #ffe6d4 58%, #ad87e6 78%, #8e6cc5 100%); }
+    .theme-choice[data-theme="teal"] .theme-preview { background: linear-gradient(165deg, #fff4e9 0%, #ffe3d4 56%, #9ed5bc 77%, #367f75 100%); }
+    .theme-choice strong { display: block; padding: 5px 2px 0; font-size: 13px; }
+    .settings-footer { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .settings-footer .small-print { margin: 0; }
+    .danger-btn { border: 0; background: transparent; color: #a73343; font-weight: 700; padding: 9px 0; }
+    .settings-note { margin: 9px 0 0; color: var(--ink-soft); font-size: 11px; }
+    .profile-settings fieldset { border: 0; border-top: 1px solid var(--line); padding: 18px 0 0; margin: 20px 0 0; }
+    .profile-settings legend { padding: 0 8px 0 0; font-weight: 700; }
+    .profile-settings .small-print { margin: 5px 0 12px; }
+    .peer-preference { display: flex; align-items: start; gap: 11px; padding: 12px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+    .peer-preference:last-child { border-bottom: 0; }
+    .peer-preference input { margin: 4px 0 0; width: 18px; height: 18px; accent-color: var(--accent); flex: 0 0 auto; }
+    .peer-preference strong, .peer-preference small { display: block; }
+    .peer-preference small { color: var(--ink-soft); margin-top: 2px; }
+    .profile-settings-actions { display: flex; justify-content: end; gap: 9px; margin-top: 22px; }
+    body[data-theme="legendary"] { --paper: #fbf0e9; --white: #fffaf6; --ink: #302a31; --ink-soft: #766b70; --line: #eadbd3; --accent: #6259c7; --accent-light: #eeebff; --yellow: #ffdda1; --magenta: #bd4d88; --cyan: #76c7b5; }
+    body[data-theme="lavender"] { --paper: #f5f0fa; --white: #fdfaff; --ink: #302a39; --ink-soft: #766d80; --line: #e4d9ed; --accent: #7655b5; --accent-light: #eee8fa; --cyan: #9c83d6; }
+    body[data-theme="teal"] { --accent: #087c72; --accent-light: #e0f3ed; --cyan: #71c2ac; }
+    body[data-appearance="dark"] { --paper: #211e23; --white: #302b32; --ink: #f8f1ed; --ink-soft: #c4b8bc; --line: #51474d; --accent: #aaa2ff; --accent-light: #41394d; --yellow: #594b38; --magenta: #d778a6; --cyan: #4e8290; }
+    body[data-appearance="dark"][data-theme="lavender"] { --accent: #b6a0ed; --accent-light: #41394d; }
+    body[data-appearance="dark"][data-theme="teal"] { --accent: #6ed2b6; --accent-light: #304842; }
+    body[data-appearance="dark"] .topbar { background: rgba(48,43,50,.94); }
+    body[data-appearance="dark"] .panel, body[data-appearance="dark"] .story, body[data-appearance="dark"] .scenario, body[data-appearance="dark"] .feature, body[data-appearance="dark"] .profile-dialog, body[data-appearance="dark"] .profile-dialog input, body[data-appearance="dark"] .profile-dialog select { background-color: var(--white); color: var(--ink); }
+    body[data-appearance="dark"] .mode-switch, body[data-appearance="dark"] .auth-switch { background: #403941; }
+    body[data-appearance="dark"] .theme-preview { filter: brightness(.78); }
+    .content { width: min(100%, 1180px); padding: 34px; margin: 0 auto; }
+    .view { animation: appear .32s ease both; }
+    @keyframes appear { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+    .welcome { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 25px; }
+    .welcome h1 { font-size: clamp(34px, 4vw, 48px); line-height: 1.05; margin: 7px 0 9px; }
+    .welcome p { color: var(--ink-soft); margin: 0; }
+    .streak { border-left: 1px solid var(--line); padding-left: 18px; min-width: 130px; }
+    .streak strong { display: block; font-family: var(--serif); font-size: 27px; }
+    .streak span { color: var(--ink-soft); font-size: 12px; }
+    .hero-grid { display: grid; grid-template-columns: 1.55fr .85fr; gap: 16px; }
+    .hero-card { border-radius: var(--radius-card); min-height: 240px; padding: clamp(22px, 3.2vw, 34px); position: relative; overflow: hidden; }
+    .hero-card.primary { background: var(--accent-light); }
+    .hero-card.primary::after { content: ""; width: 180px; height: 180px; border-radius: 50%; background: var(--yellow); position: absolute; right: -28px; bottom: -82px; opacity: .8; }
+    .hero-card h2 { font-size: 30px; max-width: 390px; margin: 12px 0 10px; line-height: 1.1; }
+    .hero-card p { color: var(--ink-soft); max-width: 400px; margin-bottom: 18px; }
+    .hero-card .btn { position: relative; z-index: 1; }
+    .hero-card.checkin { background: var(--yellow); display: flex; flex-direction: column; justify-content: space-between; }
+    .hero-card.checkin h2 { font-size: 26px; }
+    .mood-row { display: flex; gap: 8px; }
+    .mood { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(8,20,38,.25); background: rgba(255,255,255,.46); font-size: 20px; }
+    .mood:hover, .mood.selected { background: white; border-color: var(--accent); transform: scale(1.05); }
+    .section-heading { display: flex; align-items: baseline; justify-content: space-between; margin: 30px 0 13px; }
+    .section-heading h2 { font-size: 22px; margin: 0; }
+    .section-heading button { background: none; border: 0; color: var(--accent); font-weight: 700; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .feature { border: 1px solid var(--line); background: var(--white); border-radius: var(--radius-control); padding: 18px; min-height: 155px; cursor: pointer; text-align: left; color: var(--ink); transition: transform .18s, box-shadow .18s; }
+    .feature:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .feature .feature-icon { display: block; font-size: 23px; margin-bottom: 11px; }
+    .feature strong { display: block; margin-bottom: 4px; }
+    .feature span:last-child { color: var(--ink-soft); font-size: 13px; }
+    .quote-strip { background: #e6f4fb; margin-top: 18px; border-radius: var(--radius-card); padding: 17px 20px; display: flex; gap: 14px; align-items: center; }
+    .quote-strip .quote-mark { font-family: var(--serif); font-size: 35px; line-height: 1; color: var(--accent); }
+    .quote-strip p { margin: 0; font-family: var(--serif); font-size: 18px; }
+    .page-title { margin-bottom: 22px; }
+    .page-title h1 { font-size: 38px; margin: 5px 0; }
+    .page-title p { margin: 0; color: var(--ink-soft); }
+    .panel { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 23px; }
+    .reset-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+    .breath-stage { min-height: 365px; background: #e5f6fb; display: grid; place-items: center; text-align: center; overflow: hidden; position: relative; }
+    .breath-orb { width: 170px; height: 170px; border-radius: 50%; background: var(--cyan); border: 1px solid rgba(8,20,38,.1); color: var(--ink); display: grid; place-items: center; font-family: var(--serif); font-size: 20px; transition: transform 4s ease-in-out, background 1s; box-shadow: 0 0 0 28px rgba(24,201,230,.2), 0 0 0 56px rgba(24,201,230,.12); cursor: pointer; }
+    .breath-orb:hover { filter: brightness(1.03); }
+    .breath-orb:active { transform: scale(.97); }
+    .breath-orb.breathing { transform: scale(1.28); background: var(--yellow); }
+    .breath-text { position: absolute; bottom: 24px; left: 20px; right: 20px; color: var(--ink-soft); }
+    .exercise-list { display: grid; gap: 11px; margin-top: 16px; }
+    .exercise { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .exercise:last-child { border-bottom: 0; }
+    .exercise strong { display: block; margin-bottom: 3px; }
+    .safety { background: #fff0f8; border-left: 4px solid var(--magenta); padding: 15px 17px; border-radius: 4px var(--radius-control) var(--radius-control) 4px; margin-top: 15px; }
+    .safety p { margin: 5px 0 0; font-size: 13px; color: #63384f; }
+    .study-layout { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 16px; align-items: start; }
+    .study-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+    .study-form .field.wide { grid-column: 1/-1; }
+    .study-result { margin-top: 17px; border-top: 1px solid var(--line); padding-top: 18px; }
+    .study-result h3 { font-size: 22px; margin-bottom: 9px; }
+    .lesson-step { display: flex; gap: 11px; margin: 12px 0; }
+    .step-num { width: 25px; height: 25px; border-radius: 50%; background: var(--accent-light); display: grid; place-items: center; font-size: 12px; font-weight: 700; flex: 0 0 auto; }
+    .side-note { background: #fff1a8; }
+    .side-note h2 { font-size: 23px; }
+    .quiz-box { background: #e8f4fa; border-radius: var(--radius-control); padding: 16px; margin-top: 16px; }
+    .quiz-options { display: grid; gap: 7px; margin-top: 12px; }
+    .quiz-options button { background: white; border: 1px solid #d1ddec; border-radius: 10px; color: var(--ink); padding: 9px; text-align: left; }
+    .quiz-options button:hover { border-color: var(--accent); }
+    .choice-grid, .story-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .scenario { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 21px; }
+    .scenario h2, .story h2 { font-size: 23px; margin: 7px 0; }
+    .scenario p, .story p { color: var(--ink-soft); }
+    .choice-options { display: grid; gap: 8px; margin: 16px 0 0; }
+    .choice-options button { background: #edf2f9; border: 1px solid var(--line); color: var(--ink); border-radius: 10px; padding: 11px; text-align: left; }
+    .choice-feedback { margin-top: 12px; padding: 12px; background: var(--accent-light); border-radius: 10px; color: var(--ink); }
+    .story { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
+    .story-art { min-height: 118px; display: grid; place-items: center; font-size: 40px; background: #dff8fc; }
+    .story:nth-child(2) .story-art { background: #fff1a8; }
+    .story:nth-child(3) .story-art { background: #fde1f2; }
+    .story:nth-child(4) .story-art { background: #e7e2ff; }
+    .story-copy { padding: 17px; }
+    .story-copy .eyebrow { font-size: 10px; }
+    .story-copy h2 { margin-top: 5px; }
+    .story-copy button { background: none; color: var(--accent); font-weight: 700; border: 0; padding: 0; }
+    .connect-banner { background: var(--ink); color: white; border-radius: var(--radius-card); padding: 23px; display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 16px; }
+    .connect-banner h2 { font-size: 26px; margin: 0 0 3px; }
+    .connect-banner p { margin: 0; color: #c8d5e6; }
+    .connect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .circle-row { padding: 13px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); }
+    .circle-row:last-child { border-bottom: 0; }
+    .circle-row strong { display: block; }
+    .circle-row small { color: var(--ink-soft); }
+    .guardrails { font-size: 13px; color: var(--ink-soft); padding-left: 18px; }
+    .pulsechat-grid { display: grid; grid-template-columns: minmax(190px, .7fr) minmax(0, 1.65fr); gap: 14px; align-items: start; }
+    .pulsechat-rooms { display: grid; gap: 7px; }
+    .pulsechat-room { width: 100%; display: flex; align-items: center; gap: 10px; padding: 11px; border: 1px solid transparent; border-radius: 12px; background: transparent; color: var(--ink); text-align: left; }
+    .pulsechat-room:hover, .pulsechat-room.active { border-color: var(--line); background: var(--accent-light); }
+    .pulsechat-room-icon { width: 38px; height: 38px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 12px; background: var(--white); font-size: 19px; }
+    .pulsechat-room strong, .pulsechat-room small { display: block; }
+    .pulsechat-room small { color: var(--ink-soft); font-size: 11px; }
+    .pulsechat-head { display: flex; justify-content: space-between; align-items: start; gap: 10px; padding-bottom: 13px; border-bottom: 1px solid var(--line); }
+    .pulsechat-head h2 { font-size: 23px; margin: 0 0 3px; }
+    .pulsechat-head p { color: var(--ink-soft); font-size: 12px; margin: 0; }
+    .preview-pill { display: inline-flex; gap: 6px; align-items: center; padding: 5px 9px; border-radius: 20px; background: #fff1d2; color: #61440c; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .pulsechat-messages { display: grid; gap: 12px; max-height: 340px; min-height: 220px; overflow-y: auto; padding: 16px 2px; }
+    .pulsechat-message { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 8px; align-items: start; }
+    .pulsechat-message-avatar { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: var(--accent-light); color: var(--ink); font-size: 12px; font-weight: 700; }
+    .pulsechat-message-body { min-width: 0; }
+    .pulsechat-message-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 7px; margin-bottom: 2px; }
+    .pulsechat-message-meta strong { font-size: 12px; }
+    .pulsechat-message-meta time { color: var(--ink-soft); font-size: 10px; }
+    .pulsechat-message-body p { margin: 0; overflow-wrap: anywhere; font-size: 13px; }
+    .pulsechat-report { border: 0; background: transparent; color: var(--ink-soft); font-size: 10px; padding: 3px; }
+    .pulsechat-report:hover { color: #a73343; }
+    .pulsechat-compose { border-top: 1px solid var(--line); padding-top: 12px; }
+    .pulsechat-compose label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+    .pulsechat-compose-row { display: flex; gap: 8px; }
+    .pulsechat-compose-row input { min-width: 0; flex: 1; border: 1px solid #cbd6e7; border-radius: 11px; padding: 10px 12px; background: var(--white); color: var(--ink); }
+    .pulsechat-safety-note { margin: 8px 0 0; color: var(--ink-soft); font-size: 10px; }
+    .pulsechat-resources { margin-top: 14px; }
+    .pulsechat-resource-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .pulsechat-resource { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--white); color: var(--ink); text-align: left; }
+    .pulsechat-resource:hover { border-color: var(--accent); }
+    .pulsechat-resource strong, .pulsechat-resource small { display: block; }
+    .pulsechat-resource small { color: var(--ink-soft); font-size: 11px; }
+    .pulsechat-empty { align-self: center; padding: 24px; color: var(--ink-soft); text-align: center; font-size: 13px; }
+    body[data-appearance="dark"] .preview-pill { background: #594b38; color: #ffdda1; }
+    .module-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .module-grid .feature { min-height: 124px; padding: 15px; border: 0; color: white; }
+    .module-grid .feature strong { line-height: 1.25; }
+    .module-grid .feature span:last-child { color: rgba(255,255,255,.88); }
+    .module-grid .feature:nth-child(6n+1) { background: #213758; }
+    .module-grid .feature:nth-child(6n+2) { background: #087b9f; }
+    .module-grid .feature:nth-child(6n+3) { background: #4b36a4; }
+    .module-grid .feature:nth-child(6n+4) { background: #ad2877; }
+    .module-grid .feature:nth-child(6n+5) { background: #175f78; }
+    .module-grid .feature:nth-child(6n) { background: #263d72; }
+    .module-grid .feature .feature-icon { font-size: 25px; margin-bottom: 7px; }
+    .progress-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .progress-stat { background: var(--accent-light); border-radius: var(--radius-control); padding: 17px; }
+    .progress-stat strong { display: block; font-family: var(--serif); font-size: 30px; }
+    .progress-stat span { color: var(--ink-soft); font-size: 13px; }
+    .prompt-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .prompt-list button { background: #edf2f9; border: 1px solid var(--line); border-radius: 10px; padding: 12px; color: var(--ink); text-align: left; }
+    .prompt-list button:hover { border-color: var(--accent); }
+    .path-result { background: var(--accent-light); border-radius: var(--radius-control); padding: 15px; margin-top: 14px; }
+    .habit-row { display: flex; align-items: center; gap: 10px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .habit-row:last-child { border-bottom: 0; }
+    .habit-row input { width: 18px; height: 18px; accent-color: var(--accent); }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; background: var(--ink); color: white; padding: 11px 16px; border-radius: var(--radius-control); box-shadow: var(--shadow); transition: .2s; z-index: 5; max-width: calc(100vw - 32px); }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+    .mobile-nav { display: none; }
+    @media (max-width: 880px) {
+      .app-shell { grid-template-columns: 190px minmax(0,1fr); }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-card.checkin { min-height: 185px; }
+      .study-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .auth-screen { grid-template-columns: 1fr; }
+      .auth-side { min-height: 280px; padding: 26px; }
+      .auth-topline { justify-content: start; }
+      .auth-copy { padding: 34px 0 12px; }
+      .auth-copy h1 { font-size: 43px; }
+      .auth-illustration { height: 150px; margin-top: 18px; }
+      .auth-note { display: none; }
+      .auth-main { padding: 28px 22px 40px; }
+      .confirmation-screen { padding: 14px; }
+      .confirmation-header { padding: 20px 20px 16px; }
+      .story-stage { min-height: 235px; padding: 22px 18px; }
+      .story-footer { padding: 16px 20px 19px; }
+      .app-shell { display: block; padding-bottom: 65px; }
+      .sidebar { display: none; }
+      .topbar { height: 56px; padding: 0 12px; }
+      .topbar .date { font-size: 12px; }
+      .topbar-left { gap: 7px; }
+      .topbar .circle-back { width: 34px; height: 34px; font-size: 21px; }
+      .topbar-right { gap: 8px; }
+      .content { padding: 24px 18px; }
+      .welcome { align-items: start; flex-direction: column; gap: 15px; }
+      .streak { border-left: 0; border-top: 1px solid var(--line); padding: 10px 0 0; min-width: 0; }
+      .streak strong { display: inline; margin-right: 5px; }
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+      .module-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .progress-grid { grid-template-columns: 1fr; }
+      .prompt-list { grid-template-columns: 1fr; }
+      .feature { min-height: 142px; padding: 14px; }
+      .reset-layout, .choice-grid, .story-grid, .connect-grid { grid-template-columns: 1fr; }
+      .study-form { grid-template-columns: 1fr; }
+      .study-form .field.wide { grid-column: auto; }
+      .connect-banner { align-items: start; flex-direction: column; }
+      .pulsechat-grid { grid-template-columns: 1fr; }
+      .pulsechat-rooms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pulsechat-room { padding: 8px; }
+      .pulsechat-room-icon { width: 32px; height: 32px; }
+      .pulsechat-resource-grid { grid-template-columns: 1fr; }
+      .pulsechat-head { flex-direction: column; }
+      .mobile-nav { position: fixed; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); bottom: 0; left: 0; right: 0; z-index: 3; background: var(--ink); padding: 7px 4px max(7px, env(safe-area-inset-bottom)); }
+      .mobile-nav .nav-btn { display: grid; justify-items: center; align-content: center; gap: 2px; min-width: 0; padding: 5px 2px; font-size: 9px; white-space: nowrap; }
+      .mobile-nav .nav-icon { display: grid; place-items: center; width: 25px; height: 23px; font-size: 17px; }
+      .mobile-nav .nav-btn[data-mobile-view="pulsechat"] .nav-icon { width: 40px; height: 40px; margin-top: -19px; border: 3px solid var(--ink); border-radius: 50%; background: var(--accent); color: white; font-size: 20px; box-shadow: 0 0 0 1px rgba(255,255,255,.2); }
+      .mobile-nav .nav-btn[data-mobile-view="pulsechat"] { padding-top: 0; }
+      .mobile-nav .nav-btn[data-mobile-view="pulsechat"] span:last-child { margin-top: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <section class="auth-screen" id="authScreen" aria-label="NextpulseZA account">
+    <div class="auth-side">
+      <div class="auth-topline"><button class="circle-back" type="button" id="authBackBtn" aria-label="Back to create account" title="Back to create account" disabled>←</button><div class="brand"><img class="brand-mark" src="nextpulse-icon.png" alt=""><span>NextpulseZA</span></div></div>
+      <div class="auth-copy">
+        <div class="eyebrow">Pause. Think. Learn. Grow.</div>
+        <h1>Life gets loud.<br>Find your next step.</h1>
+        <p>A private-feeling space to reset, learn at your pace, and make choices that feel like yours.</p>
+        <div class="auth-illustration" aria-hidden="true">
+          <svg viewBox="0 0 420 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M66 153.5H354" stroke="white" stroke-opacity=".18" stroke-linecap="round"/>
+            <circle cx="92" cy="58" r="3" fill="#FFDA3D"/>
+            <circle cx="325" cy="46" r="4" fill="#18C9E6"/>
+            <path d="M111 83L115 93L125 97L115 101L111 111L107 101L97 97L107 93L111 83Z" fill="#FFDA3D" fill-opacity=".85"/>
+            <path d="M314 105L317 112L324 115L317 118L314 125L311 118L304 115L311 112L314 105Z" fill="#18C9E6"/>
+            <ellipse cx="212" cy="151" rx="57" ry="8" fill="#081426" fill-opacity=".32"/>
+            <g class="bag-float">
+              <path d="M187 85V68C187 54 198 43 212 43C226 43 237 54 237 68V85" stroke="#FFDA3D" stroke-width="8" stroke-linecap="round"/>
+              <path d="M177 82C177 77.5817 180.582 74 185 74H239C243.418 74 247 77.5817 247 82V139C247 145.075 242.075 150 236 150H188C181.925 150 177 145.075 177 139V82Z" fill="#D92F91"/>
+              <path d="M177 91H247V103H177V91Z" fill="#B82378"/>
+              <path d="M190 110H234V138H190V110Z" fill="#F174BA"/>
+              <path d="M199 119H225" stroke="#64164A" stroke-opacity=".62" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="212" cy="85" r="3" fill="#FFDA3D"/>
+              <g class="bag-tag">
+                <path d="M238 82L253 70" stroke="#FFDA3D" stroke-width="2"/>
+                <path d="M249 57L262 54L266 67L254 73L247 67L249 57Z" fill="#FFDA3D"/>
+                <circle cx="254" cy="61" r="1.5" fill="#081426"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="auth-note">Made with South African teens in mind. You do not have to figure everything out today.</div>
+    </div>
+    <div class="auth-main">
+      <form class="auth-card" id="authForm">
+        <h2 id="authTitle">Welcome to NextpulseZA</h2>
+        <p class="muted" id="authIntro">Start with a nickname. This demo keeps your details only in this browser session.</p>
+        <div class="auth-switch" role="tablist" aria-label="Account options">
+          <button type="button" class="active" id="createTab" role="tab" aria-selected="true">Create account</button>
+          <button type="button" id="loginTab" role="tab" aria-selected="false">Log in</button>
+        </div>
+        <button class="google-btn" type="button" id="googleSignIn">
+          <svg class="google-mark" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.91c-.58 2.96-2.26 5.48-4.72 7.18l7.27 5.64c4.25-3.92 7.52-9.72 7.52-17.29Z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.75-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.55 2.56 10.78l7.97-6.19Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.8l-7.27-5.64c-2.02 1.35-4.61 2.15-8.63 2.15-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z"/></svg>
+          Continue with Google
+        </button>
+        <div class="auth-divider" aria-hidden="true">or continue with email</div>
+        <div class="field" id="nameField"><label for="nickname">What should we call you?</label><input id="nickname" autocomplete="nickname" maxlength="24" placeholder="A nickname is fine" required></div>
+        <div class="field" id="ageField"><label for="ageBand">Your age range</label><select id="ageBand" required><option value="">Choose one</option><option>13-15</option><option>16-17</option><option>18-19</option></select></div>
+        <div class="field"><label for="email">Email (optional in this demo)</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+        <p class="small-print" id="authDisclaimer">This prototype has no real accounts or server. Google sign-in is a visual demo only. A real launch needs secure sign-in, privacy safeguards, and age-appropriate support. Do not enter a password or private information.</p>
+        <button class="btn full" type="submit" id="authSubmit">Enter NextpulseZA <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  </section>
+
+  <section class="confirmation-screen hidden" id="confirmationScreen" aria-label="Demo account confirmation">
+    <article class="confirmation-card">
+      <header class="confirmation-header">
+        <div class="confirmation-topline"><button class="circle-back" type="button" id="confirmationBack" aria-label="Back to sign up" title="Back to sign up">←</button><div class="brand"><img class="brand-mark" src="nextpulse-icon.png" alt=""><span>NextpulseZA</span></div></div>
+        <div class="eyebrow">A little pause while you wait</div>
+        <h1>Getting your space ready, <span id="confirmationName">friend</span>.</h1>
+        <p>Here’s a tiny story about taking things one step at a time.</p>
+        <div class="confirmation-status" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span><span id="confirmationStatus">Preparing your demo profile…</span></div>
+      </header>
+      <div class="story-stage" aria-live="polite" aria-atomic="true">
+        <div class="story-scene" id="confirmationStory"></div>
+      </div>
+      <footer class="story-footer">
+        <div class="story-progress" id="storyProgress" aria-hidden="true"></div>
+        <div class="story-actions">
+          <button class="quiet-btn" type="button" id="skipStory">Skip story</button>
+          <button class="btn" type="button" id="nextStory">Next <span aria-hidden="true">→</span></button>
+        </div>
+        <p class="confirmation-note">This is a prototype: no account is created or confirmed, and your details stay in this browser session.</p>
+      </footer>
+    </article>
+  </section>
+
+  <div class="app-shell hidden" id="appShell">
+    <aside class="sidebar">
+      <div class="brand"><img class="brand-mark" src="nextpulse-icon.png" alt=""><span>NextpulseZA</span></div>
+      <nav aria-label="Main navigation" id="sideNav"></nav>
+      <div class="sidebar-bottom">
+        <div class="profile-line"><span class="avatar user-initial">M</span><span class="user-name">My space</span></div>
+        <button class="quiet-btn" id="logoutBtn">↪ &nbsp; Leave this session</button>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="topbar-left"><button class="circle-back" type="button" id="appBackBtn" aria-label="Back to previous screen" title="Back to previous screen" disabled>←</button><span class="date" id="todayDate"></span></div><div class="topbar-right"><span class="muted user-name">My space</span><button class="avatar profile-trigger user-initial" id="profileSettingsBtn" type="button" aria-label="Open profile and settings" aria-haspopup="dialog" title="Profile and settings">M</button></div></header>
+      <div class="content" id="content"></div>
+    </main>
+    <nav class="mobile-nav" aria-label="Mobile navigation" id="mobileNav"></nav>
+  </div>
+  <dialog class="profile-dialog" id="profileDialog" aria-labelledby="profileDialogTitle">
+    <form class="profile-settings" id="profileSettingsForm">
+      <div class="profile-settings-header">
+        <button class="circle-back dialog-back" type="button" id="settingsBack" aria-label="Back to app" title="Back to app">←</button>
+        <div><div class="eyebrow">Your space, your choices</div><h2 id="profileDialogTitle">Profile & preferences</h2><p>Personalise your space and the circles you want to see.</p></div>
+        <button class="dialog-close" type="button" id="closeProfileDialog" aria-label="Close settings">×</button>
+      </div>
+      <div class="settings-profile">
+        <span class="settings-avatar" id="settingsAvatar" aria-hidden="true">M</span>
+        <h3 id="settingsProfileName">My space</h3>
+        <p id="settingsProfileEmail">Email not added</p>
+      </div>
+      <div class="field"><label for="settingsNickname">Name</label><input id="settingsNickname" maxlength="24" autocomplete="nickname" required></div>
+      <div class="field"><label for="settingsEmail">Email</label><input id="settingsEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+      <button class="whatsapp-btn" type="button" id="whatsappLink">☏ &nbsp; Chat with Toqi on WhatsApp</button>
+
+      <section class="settings-section" aria-labelledby="generalSettingsTitle">
+        <h3 class="settings-section-title" id="generalSettingsTitle">General</h3>
+        <label class="settings-row" for="languageSetting"><span class="settings-icon" aria-hidden="true">文</span><span class="settings-row-copy"><strong>Language</strong><small>Choose your preferred language</small></span><select id="languageSetting" aria-label="Language"><option>English</option><option>isiZulu</option><option>isiXhosa</option><option>Afrikaans</option><option>Sesotho</option></select></label>
+        <div class="settings-row"><span class="settings-icon" aria-hidden="true">📍</span><span class="settings-row-copy"><strong>Location</strong><small>For reminders and suggestions</small></span><span class="setting-status" id="locationStatus">● Off</span><input class="settings-toggle" id="locationSetting" type="checkbox" aria-label="Enable location preference"></div>
+        <div class="settings-row"><span class="settings-icon" aria-hidden="true">🔔</span><span class="settings-row-copy"><strong>Notifications</strong><small>Reminders and alerts</small></span><span class="setting-status" id="notificationStatus">● Off</span><input class="settings-toggle" id="notificationSetting" type="checkbox" aria-label="Enable notifications preference"></div>
+        <label class="settings-row" for="voiceSetting"><span class="settings-icon" aria-hidden="true">🎙</span><span class="settings-row-copy"><strong>Live voice</strong><small>Choose a voice style for Toqi Live</small></span><select id="voiceSetting" aria-label="Live voice"><option>Warm</option><option>Calm</option><option>Bright</option></select></label>
+        <button class="settings-row settings-action" type="button" id="replayOnboarding"><span class="settings-icon" aria-hidden="true">↻</span><span class="settings-row-copy"><strong>Start onboarding again</strong><small>Replay setup and product tour</small></span><span aria-hidden="true">›</span></button>
+      </section>
+
+      <section class="settings-section" aria-labelledby="appearanceSettingsTitle">
+        <h3 class="settings-section-title" id="appearanceSettingsTitle">Preferences · Appearance</h3>
+        <div class="settings-row-copy" style="padding:8px 0"><strong>Mode</strong></div>
+        <div class="mode-switch" role="group" aria-label="Appearance mode">
+          <button type="button" class="active" data-appearance-mode="light">☼ &nbsp; Light</button>
+          <button type="button" data-appearance-mode="dark">☾ &nbsp; Dark</button>
+        </div>
+        <div class="settings-row-copy" style="padding:16px 0 7px"><strong>Color theme</strong></div>
+        <div class="theme-list" role="group" aria-label="Color theme">
+          <button class="theme-choice active" type="button" data-theme="legendary" aria-pressed="true"><span class="theme-preview" aria-hidden="true"><span></span><span></span><span></span><span></span></span><strong>Legendary</strong></button>
+          <button class="theme-choice" type="button" data-theme="lavender" aria-pressed="false"><span class="theme-preview" aria-hidden="true"><span></span><span></span><span></span><span></span></span><strong>Lavender</strong></button>
+          <button class="theme-choice" type="button" data-theme="teal" aria-pressed="false"><span class="theme-preview" aria-hidden="true"><span></span><span></span><span></span><span></span></span><strong>Teal</strong></button>
+        </div>
+      </section>
+
+      <fieldset>
+        <legend>Interest circles</legend>
+        <p class="small-print">Choose which groups to show in Find your people. You can change these choices any time.</p>
+        <div id="peerPreferences"></div>
+      </fieldset>
+      <section class="settings-section" aria-labelledby="accountSettingsTitle">
+        <h3 class="settings-section-title" id="accountSettingsTitle">Account & privacy</h3>
+        <button class="settings-row settings-action" type="button" id="accountManagement"><span class="settings-icon" aria-hidden="true">◎</span><span class="settings-row-copy"><strong>Account management</strong><small>Clear this demo profile and session</small></span><span aria-hidden="true">›</span></button>
+        <button class="settings-row settings-action" type="button" id="privacyPolicy"><span class="settings-icon" aria-hidden="true">▤</span><span class="settings-row-copy"><strong>Privacy policy</strong><small>Prototype privacy information</small></span><span aria-hidden="true">›</span></button>
+      </section>
+      <div class="settings-footer"><button class="danger-btn" type="button" id="settingsSignOut">↪ &nbsp; Sign out</button><span class="small-print">Toqi · Version 1.0.25</span></div>
+      <p class="settings-note">Demo settings stay in this browser session. Language does not translate the app; location, notifications, voice playback, WhatsApp, and account services are not connected.</p>
+      <div class="profile-settings-actions"><button class="btn secondary" type="button" id="cancelProfileSettings">Close</button><button class="btn" type="submit">Save settings</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const navigation = [
+      { id: "home", label: "Today", icon: "⌂" },
+      { id: "progress", label: "Progress", icon: "▥" },
+      { id: "reset", label: "Reset", icon: "◌" },
+      { id: "study", label: "Study help", icon: "▤" },
+      { id: "choices", label: "Think it through", icon: "◇" },
+      { id: "connect", label: "Find your people", icon: "◎" },
+      { id: "pulsechat", label: "PulseChat", icon: "◉" }
+    ];
+    const mobileNavigation = [
+      { id: "home", label: "Home", icon: "⌂", views: ["home"] },
+      { id: "learnHub", label: "Learn", icon: "▤", views: ["learnHub", "study", "choices", "stories"] },
+      { id: "pulsechat", label: "PulseChat", icon: "◉", views: ["pulsechat"] },
+      { id: "wellbeingHub", label: "Wellbeing", icon: "♡", views: ["wellbeingHub", "reset", "lifeSkills", "confidence"] },
+      { id: "moreHub", label: "More", icon: "•••", views: ["moreHub", "progress", "connect", "career", "relationships", "ask"] }
+    ];
+    const pulseChatChannels = [
+      {
+        id: "study", name: "Study room", icon: "📚", description: "Homework help, one step at a time",
+        messages: [
+          { sender: "Toqi guide (demo)", text: "Welcome to the preview. What subject are you working on today?", time: "10:14" },
+          { sender: "Lebo (demo)", text: "I’m breaking my maths revision into smaller bits. One question at a time helps.", time: "10:16" }
+        ]
+      },
+      {
+        id: "wellbeing", name: "Wellbeing", icon: "🌱", description: "Gentle ideas for everyday stress",
+        messages: [
+          { sender: "Toqi guide (demo)", text: "A pause, a stretch, or checking in with someone you trust can be a good first step.", time: "09:32" },
+          { sender: "Ayo (demo)", text: "I went outside for a minute between study sessions. That helped me reset.", time: "09:35" }
+        ]
+      },
+      {
+        id: "future", name: "Future ideas", icon: "✨", description: "Explore interests, skills, and possibilities",
+        messages: [
+          { sender: "Toqi guide (demo)", text: "You don’t have to choose your whole future today. What kinds of things do you like doing?", time: "Yesterday" },
+          { sender: "Zee (demo)", text: "I like making things and solving puzzles, so I’m trying a few different projects.", time: "Yesterday" }
+        ]
+      },
+      {
+        id: "creative", name: "Creative corner", icon: "🎨", description: "Music, art, stories, and making",
+        messages: [
+          { sender: "Toqi guide (demo)", text: "Share ideas about what you enjoy making. Keep personal details and private photos out of chat.", time: "Yesterday" }
+        ]
+      }
+    ];
+    const peerGroups = [
+      { id: "study", name: "Study together", description: "School questions, no judgement" },
+      { id: "sport", name: "Football & sport", description: "Teams, training, match talk" },
+      { id: "creative", name: "Music & making things", description: "Share what you're creating" },
+      { id: "quiet", name: "Quiet corner", description: "Read along, no need to post" }
+    ];
+    const content = document.getElementById("content");
+    const authScreen = document.getElementById("authScreen");
+    const confirmationScreen = document.getElementById("confirmationScreen");
+    const appShell = document.getElementById("appShell");
+    const toast = document.getElementById("toast");
+    let activeView = null;
+    const viewHistory = [];
+    let toastTimer;
+    let breathingTimer;
+    let storyTimer;
+    let authMode = "create";
+    let storyIndex = 0;
+    let confirmationReturnToApp = false;
+    let activePulseChannel = "study";
+    let pulseUserMessages = [];
+    const blockedPulseDemoSenders = new Set();
+    let profile = { name: "", age: "", email: "" };
+    const settingsPreferences = { appearance: "light", theme: "legendary", language: "English", location: false, notifications: false, voice: "Warm" };
+    let selectedPeerGroups = peerGroups.map(group => group.id);
+    const progress = { lessons: 0, choices: 0, habits: 0, confidence: 0 };
+    const confirmationStories = [
+      { icon: "🌱", title: "Start small", text: "A learner named Ayo has a long list of things to do. Instead of tackling everything, they pick one easy first step: open their notebook and write down what matters today." },
+      { icon: "☀️", title: "Take a breath", text: "The list still looks long, so Ayo steps outside for a moment and takes a slow breath. A short pause helps the next step feel a little less heavy." },
+      { icon: "✨", title: "Keep going your way", text: "Ayo asks someone they trust for help with one tricky part. They don’t have to do it all alone—or figure it all out today." }
+    ];
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    function navMarkup() {
+      return navigation.map(item => `<button class="nav-btn ${activeView === item.id ? "active" : ""}" data-view="${item.id}" ${activeView === item.id ? 'aria-current="page"' : ""}><span class="nav-icon" aria-hidden="true">${item.icon}</span><span>${item.label}</span></button>`).join("");
+    }
+
+    function mobileNavMarkup() {
+      return mobileNavigation.map(item => {
+        const active = item.views.includes(activeView);
+        return `<button class="nav-btn ${active ? "active" : ""}" data-view="${item.id}" data-mobile-view="${item.id}" ${active ? 'aria-current="page"' : ""}><span class="nav-icon" aria-hidden="true">${item.icon}</span><span>${item.label}</span></button>`;
+      }).join("");
+    }
+
+    function bindNavigation() {
+      document.querySelectorAll("[data-view]").forEach(button => button.addEventListener("click", () => renderView(button.dataset.view)));
+    }
+
+    function renderNav() {
+      document.getElementById("sideNav").innerHTML = navMarkup();
+      document.getElementById("mobileNav").innerHTML = mobileNavMarkup();
+      bindNavigation();
+    }
+
+    function updateBackButton() {
+      document.getElementById("appBackBtn").disabled = activeView === "home" && viewHistory.length === 0;
+    }
+
+    function goBack() {
+      if (document.getElementById("profileDialog").open) {
+        closeProfileSettings();
+        return;
+      }
+      if (confirmationReturnToApp && !confirmationScreen.classList.contains("hidden")) {
+        backFromConfirmation();
+        return;
+      }
+      const previousView = viewHistory.pop();
+      if (previousView) {
+        renderView(previousView, { fromBack: true });
+      } else if (activeView && activeView !== "home") {
+        renderView("home", { fromBack: true });
+      }
+    }
+
+    function homeView() {
+      return `<section class="view">
+        <div class="welcome"><div><div class="eyebrow">Your space, your pace</div><h1>Hey, ${escapeHtml(profile.name || "there")}.</h1><p>Whatever today brings, you can start with one small thing.</p></div><div class="streak"><strong>One step</strong><span>is enough for today</span></div></div>
+        <div class="hero-grid">
+          <article class="hero-card primary"><div class="eyebrow">Need a moment?</div><h2>Let's help your body feel a little safer.</h2><p>Try a short grounding exercise. You can stop whenever you want.</p><button class="btn" data-go="reset">Take a reset <span aria-hidden="true">→</span></button></article>
+          <article class="hero-card checkin"><div><div class="eyebrow">Quick check-in</div><h2>How are you arriving today?</h2></div><div class="mood-row" aria-label="Choose a mood"><button class="mood" aria-label="Not great" data-mood="Not great">☁</button><button class="mood" aria-label="A bit low" data-mood="A bit low">◒</button><button class="mood" aria-label="Okay" data-mood="Okay">◉</button><button class="mood" aria-label="Pretty good" data-mood="Pretty good">☀</button></div></article>
+        </div>
+        <div class="section-heading"><h2>Find your next step</h2><button data-go="progress">Your progress →</button></div>
+        <div class="feature-grid module-grid">
+          <button class="feature" data-go="reset"><span class="feature-icon">◌</span><strong>Mind Space</strong><span>Reset your body and mind.</span></button>
+          <button class="feature" data-go="study"><span class="feature-icon">▤</span><strong>Smart Study</strong><span>Learn from the basics.</span></button>
+          <button class="feature" data-go="choices"><span class="feature-icon">◇</span><strong>Decision Zone</strong><span>Think before you act.</span></button>
+          <button class="feature" data-go="stories"><span class="feature-icon">▱</span><strong>Real Stories</strong><span>See things from new angles.</span></button>
+          <button class="feature" data-go="connect"><span class="feature-icon">◎</span><strong>Connection Space</strong><span>Find a shared-interest circle.</span></button>
+          <button class="feature" data-go="lifeSkills"><span class="feature-icon">✳</span><strong>Life Skills Academy</strong><span>Build a balanced routine.</span></button>
+          <button class="feature" data-go="career"><span class="feature-icon">⌁</span><strong>Career Discovery</strong><span>Explore paths that fit you.</span></button>
+          <button class="feature" data-go="confidence"><span class="feature-icon">★</span><strong>Confidence Builder</strong><span>Notice what you bring.</span></button>
+          <button class="feature" data-go="relationships"><span class="feature-icon">♡</span><strong>Relationship Education</strong><span>Practise respect and boundaries.</span></button>
+          <button class="feature" data-go="ask"><span class="feature-icon">?</span><strong>Ask Without Fear</strong><span>Start with a question.</span></button>
+        </div>
+        <div class="quote-strip"><span class="quote-mark" aria-hidden="true">“</span><p>You can take a pause without having all the answers.</p></div>
+      </section>`;
+    }
+
+    function resetView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Come back to this moment</div><h1>Take a reset</h1><p>No perfect way to do this. Choose what feels manageable.</p></div>
+        <div class="reset-layout"><div><div class="panel breath-stage"><button class="breath-orb" id="breathOrb" type="button" aria-label="Start breathing exercise" aria-pressed="false">Ready?</button><p class="breath-text" id="breathText">Tap the circle to begin. Tap it again to stop. Keep your breath comfortable.</p></div></div>
+        <div class="panel"><div class="eyebrow">Grounding exercise</div><h2 style="font-size:25px;margin:6px 0 8px">Notice what is here</h2><p class="muted">Try this slowly, without forcing any feeling to change.</p><div class="exercise-list"><div class="exercise"><strong>5 things you can see</strong><span class="muted">Let your eyes rest on each one.</span></div><div class="exercise"><strong>4 things you can feel</strong><span class="muted">Notice your feet, clothes, or the chair.</span></div><div class="exercise"><strong>3 things you can hear</strong><span class="muted">Near sounds and far sounds both count.</span></div></div><button class="btn secondary" id="groundDone" style="margin-top:8px">I tried it</button></div></div>
+        <div class="safety"><strong>Too much to hold alone?</strong><p>Try reaching out to a trusted adult, school counsellor, or someone you trust. In South Africa, Childline is available on <strong>116</strong>. If you are in immediate danger, call <strong>112</strong> from a mobile phone.</p></div>
+      </section>`;
+    }
+
+    function studyView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Small steps, real progress</div><h1>Study help</h1><p>Tell us where you got stuck. We'll make a simple starter lesson from your topic or notes.</p></div>
+        <div class="study-layout"><div class="panel"><div class="study-form"><div class="field"><label for="subject">Subject</label><select id="subject"><option>Mathematics</option><option>Physical Sciences</option><option>Life Sciences</option><option>English</option><option>History</option><option>Other</option></select></div><div class="field"><label for="grade">Grade</label><select id="grade"><option>Grade 8</option><option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option></select></div><div class="field wide"><label for="topic">What topic is confusing?</label><input id="topic" placeholder="e.g. solving linear equations"></div><div class="field wide"><label for="notes">Or paste a few notes to simplify</label><textarea id="notes" maxlength="1500" placeholder="Paste a short section of your notes here. Leave out personal information."></textarea></div></div><button class="btn" id="explainBtn">Build my starter lesson <span aria-hidden="true">→</span></button><p class="small-print" style="margin:12px 0 0">This demo builds a study scaffold; it does not fetch or verify a lesson for your topic.</p><div class="study-result hidden" id="studyResult" aria-live="polite"></div></div>
+        <aside class="panel side-note"><div class="eyebrow">A note for your brain</div><h2>Confusion is a starting point.</h2><p>Pick one idea, practise it, then build on it. You do not need to understand the whole chapter at once.</p><div class="quiz-box"><strong>Quick check</strong><p id="quizQuestion" style="margin:7px 0 0">What is a good first step when a topic feels too big?</p><div class="quiz-options" id="quizOptions"><button data-answer="wrong">Try to memorise every line</button><button data-answer="right">Break it into one small idea</button></div><p id="quizFeedback" class="small-print" aria-live="polite" style="margin:9px 0 0"></p></div><div style="margin-top:16px"><strong>South African study sources</strong><p class="small-print" style="margin:6px 0"><a href="https://www.siyavula.com/" target="_blank" rel="noopener noreferrer">Siyavula: open textbooks and practice</a></p><p class="small-print" style="margin:0"><a href="https://www.education.gov.za/" target="_blank" rel="noopener noreferrer">Department of Basic Education</a></p></div></aside></div>
+      </section>`;
+    }
+
+    function choicesView() {
+      const scenarios = [
+        { tag: "FRIENDS", title: "The group chat is heating up", text: "A friend is being mocked in a group chat. People are pushing you to join in or confront someone face-to-face.", options: ["Add a joke so the group likes me", "Pause, check on my friend privately, and get support if needed", "Go find the person and start a fight"], answer: 1, feedback: "A pause protects everyone. Checking in privately and bringing in a trusted adult can help without adding fuel or putting you in danger." },
+        { tag: "PRESSURE", title: "Everyone says 'just do it'", text: "Your friends want you to do something that feels wrong for you. They say you'll be boring if you say no.", options: ["Say yes so they stop asking", "Use a short no and move somewhere I feel safer", "Insult them so they back off"], answer: 1, feedback: "You don't owe anyone a long explanation. A clear no and a plan to leave can make it easier to stick with what feels right." }
+      ];
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Your choices belong to you</div><h1>Think it through</h1><p>Practise a pause in a made-up situation. There is often more than one safe next step.</p></div><div class="choice-grid">${scenarios.map((scenario, i) => `<article class="scenario"><div class="eyebrow">${scenario.tag}</div><h2>${scenario.title}</h2><p>${scenario.text}</p><div class="eyebrow" style="margin-top:16px">What could you do next?</div><div class="choice-options">${scenario.options.map((option, j) => `<button data-scenario="${i}" data-option="${j}">${option}</button>`).join("")}</div><div class="choice-feedback hidden" id="choiceFeedback${i}" aria-live="polite"></div></article>`).join("")}</div><div class="safety"><strong>When a fight feels close</strong><p>Walking away is not weakness. Get space, find a safer place, and involve a trusted adult. You do not have to solve it with your hands.</p></div></section>`;
+    }
+
+    function storiesView() {
+      const stories = [
+        { icon: "🌱", tag: "WELLBEING", title: "When your mind won't switch off", text: "Thandi feels behind on everything. One honest conversation helps her find a first step." },
+        { icon: "⚽", tag: "FRIENDSHIP", title: "More than one way to be strong", text: "A disagreement at practice could become a fight. Sipho finds another way to show up." },
+        { icon: "🎧", tag: "RELATIONSHIPS", title: "Asking someone out, respectfully", text: "A simple, low-pressure way to ask, and how to handle any answer with care." },
+        { icon: "🌍", tag: "COMMUNITY", title: "Small actions, shared change", text: "Learners notice a problem at school and work together on a practical response." }
+      ];
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Different lives, different angles</div><h1>Stories</h1><p>Short scenarios to help you notice what is happening around you and what choices are possible.</p></div><div class="story-grid">${stories.map((story, i) => `<article class="story"><div class="story-art" aria-hidden="true">${story.icon}</div><div class="story-copy"><div class="eyebrow">${story.tag}</div><h2>${story.title}</h2><p>${story.text}</p><button data-story="${i}">Read story →</button></div></article>`).join("")}</div><div class="panel" style="margin-top:16px"><div class="eyebrow">A quick relationship tip</div><h2 style="font-size:24px;margin:6px 0">Keep it kind, clear, and low-pressure.</h2><p class="muted" style="margin:0">Try: “I like talking with you. Would you like to hang out sometime? It's completely okay if not.” Respect their answer, including a no or no reply. No one owes anyone a yes.</p></div></section>`;
+    }
+
+    function connectView() {
+      const groups = peerGroups.filter(group => selectedPeerGroups.includes(group.id));
+      const groupMarkup = groups.length
+        ? groups.map(group => `<div class="circle-row"><div><strong>${group.name}</strong><small>${group.description}</small></div><button class="btn secondary join-circle">Join</button></div>`).join("")
+        : `<p class="muted">No circles selected yet. Choose the groups you'd like to see in your profile settings.</p><button class="btn secondary" type="button" data-open-profile-settings>Choose circles</button>`;
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Belonging without pressure</div><h1>Find your people</h1><p>Shared-interest spaces can make it easier to start a conversation at your own pace.</p></div><div class="connect-banner"><div><h2>Small groups. Shared interests.</h2><p>Join a topic room, listen first, or share when you're ready.</p></div><button class="btn coral" id="circleInfo">How it works</button></div><div class="connect-grid"><div class="panel"><div class="eyebrow">Interest circles</div><h2 style="font-size:24px;margin:5px 0 12px">Choose a starting point</h2>${groupMarkup}<button class="quiet-btn" type="button" data-open-profile-settings style="color:var(--accent);margin-top:10px">Change circle preferences</button></div><div class="panel"><div class="eyebrow">Your safety comes first</div><h2 style="font-size:24px;margin:5px 0 10px">A note before you connect</h2><ul class="guardrails"><li>This demo does not connect to real people.</li><li>A real teen community needs trained moderation and reporting tools.</li><li>No public profiles, location sharing, or private messaging in this prototype.</li><li>Never share passwords, your address, school details, or private photos.</li></ul><div class="safety"><strong>Something doesn't feel right?</strong><p>Leave the conversation and tell a trusted adult. For urgent help in South Africa, call Childline on 116.</p></div></div></div></section>`;
+    }
+
+    function pulseChatView() {
+      const channel = pulseChatChannels.find(item => item.id === activePulseChannel) || pulseChatChannels[0];
+      const messages = [...channel.messages, ...pulseUserMessages.filter(message => message.channelId === channel.id)]
+        .filter(message => !blockedPulseDemoSenders.has(message.sender));
+      const rooms = pulseChatChannels.map(item => `<button class="pulsechat-room ${item.id === channel.id ? "active" : ""}" type="button" data-pulse-channel="${item.id}" ${item.id === channel.id ? 'aria-current="true"' : ""}><span class="pulsechat-room-icon" aria-hidden="true">${item.icon}</span><span><strong>${item.name}</strong><small>${item.description}</small></span></button>`).join("");
+      const messageMarkup = messages.length
+        ? messages.map((message, index) => `<article class="pulsechat-message"><span class="pulsechat-message-avatar" aria-hidden="true">${escapeHtml(message.sender.charAt(0))}</span><div class="pulsechat-message-body"><div class="pulsechat-message-meta"><strong>${escapeHtml(message.sender)}</strong><time>${escapeHtml(message.time)}</time></div><p>${escapeHtml(message.text)}</p></div><div><button class="pulsechat-report" type="button" data-pulse-report="${index}" aria-label="Report this demo message">Report</button>${message.sender.includes("(demo)") ? `<button class="pulsechat-report" type="button" data-pulse-block="${escapeHtml(message.sender)}" aria-label="Hide demo messages from ${escapeHtml(message.sender)}">Hide</button>` : ""}</div></article>`).join("")
+        : `<p class="pulsechat-empty">No preview messages in this room yet. You can explore the resources below.</p>`;
+      return `<section class="view"><div class="page-title"><div class="eyebrow">YoungPulse ZA · PulseChat</div><h1>Find support, share a small win.</h1><p>Topic rooms for learning, wellbeing, creativity, and future ideas—designed for safe, moderated conversations.</p></div><div class="safety" role="status"><strong>Preview only — Firebase is not connected.</strong><p>These are sample messages and anything you type stays on this device for this session. No teenagers or moderators are connected; don’t share personal details.</p></div><div class="pulsechat-grid"><section class="panel" aria-label="PulseChat topic rooms"><div class="eyebrow">Topic rooms</div><h2 style="font-size:22px;margin:5px 0 12px">Choose a space</h2><div class="pulsechat-rooms">${rooms}</div><p class="pulsechat-safety-note">The future live service will use opt-in, moderated topic rooms. No open stranger DMs.</p></section><section class="panel" aria-label="${escapeHtml(channel.name)} preview conversation"><header class="pulsechat-head"><div><h2>${channel.icon} ${escapeHtml(channel.name)}</h2><p>${escapeHtml(channel.description)}</p></div><span class="preview-pill">● SAMPLE CHAT</span></header><div class="pulsechat-messages" id="pulseChatMessages" aria-live="polite">${messageMarkup}</div><form class="pulsechat-compose" id="pulseChatForm"><label for="pulseChatInput">Try a message in this local preview</label><div class="pulsechat-compose-row"><input id="pulseChatInput" maxlength="300" autocomplete="off" placeholder="Keep it kind. Don’t include personal details." required><button class="btn" type="submit">Preview send</button></div><p class="pulsechat-safety-note" id="pulseChatFeedback">Messages stay only in this page session; they are not sent to other people or Firebase.</p></form></section></div><section class="pulsechat-resources"><div class="section-heading"><h2>Useful things, all in one place</h2><span class="small-print">Explore support at your own pace</span></div><div class="pulsechat-resource-grid"><button class="pulsechat-resource" type="button" data-go="study"><strong>📚 Study help</strong><small>Break a tricky topic into small steps.</small></button><button class="pulsechat-resource" type="button" data-go="reset"><strong>🌱 Wellbeing tools</strong><small>Try a grounding or breathing reset.</small></button><button class="pulsechat-resource" type="button" data-go="career"><strong>✨ Future ideas</strong><small>Explore interests and possible paths.</small></button></div><div class="safety"><strong>Need help with something urgent or unsafe?</strong><p>Tell a trusted adult. In South Africa, call Childline on <a href="tel:116">116</a>; if you are in immediate danger, call <a href="tel:112">112</a>. This preview is not monitored.</p></div></section></section>`;
+    }
+
+    function progressView() {
+      const completed = progress.lessons + progress.choices + progress.habits + progress.confidence;
+      const progressMessage = completed === 1 ? "You have already taken one small step in this session." : completed > 1 ? `You have already taken ${completed} small steps in this session.` : "Choose one small thing that would help today.";
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Your effort counts</div><h1>Your progress</h1><p>This is your activity in this browser session. It is not a score, and it resets when you leave.</p></div><div class="progress-grid"><div class="progress-stat"><strong>${progress.lessons}</strong><span>study sessions started</span></div><div class="progress-stat"><strong>${progress.choices}</strong><span>choices practised</span></div><div class="progress-stat"><strong>${progress.habits + progress.confidence}</strong><span>small steps taken</span></div></div><div class="panel" style="margin-top:16px"><div class="eyebrow">A reminder</div><h2 style="font-size:25px;margin:6px 0">Progress isn't a straight line.</h2><p class="muted" style="margin:0">Coming back, asking for help, or taking a pause all count. ${progressMessage}</p><button class="btn" data-go="home" style="margin-top:16px">Back to today</button></div></section>`;
+    }
+
+    function lifeSkillsView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Care for the whole you</div><h1>Life Skills Academy</h1><p>A balanced day can include rest, movement, food, learning, and people you trust. Pick one small thing, not everything.</p></div><div class="connect-grid"><div class="panel"><div class="eyebrow">Choose one for today</div><h2 style="font-size:24px;margin:5px 0 8px">A little balance</h2><label class="habit-row"><input type="checkbox" class="habit-check"><span><strong>Take a short screen break</strong><br><span class="muted">Rest your eyes or step outside for a moment.</span></span></label><label class="habit-row"><input type="checkbox" class="habit-check"><span><strong>Drink water and eat something nourishing</strong><br><span class="muted">A small, realistic choice is enough.</span></span></label><label class="habit-row"><input type="checkbox" class="habit-check"><span><strong>Move in a way that feels okay</strong><br><span class="muted">Stretch, walk, dance, or play a sport.</span></span></label><label class="habit-row"><input type="checkbox" class="habit-check"><span><strong>Check in with someone safe</strong><br><span class="muted">A message or a hello counts.</span></span></label></div><div class="panel side-note"><div class="eyebrow">Keep it realistic</div><h2>Balance isn't doing it all.</h2><p>Some days are harder than others. These are ideas, not rules. Your needs and circumstances matter.</p></div></div></section>`;
+    }
+
+    function careerView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Explore. Plan. Achieve.</div><h1>Career Discovery</h1><p>You don't have to decide your whole future today. Start with what you enjoy doing.</p></div><div class="panel"><div class="field"><label for="careerInterest">What kind of activity sounds interesting?</label><select id="careerInterest"><option value="people">Helping or teaching people</option><option value="build">Building, fixing, or working outdoors</option><option value="create">Designing, writing, or making things</option><option value="solve">Working with numbers, science, or puzzles</option></select></div><button class="btn" id="careerBtn">Explore a few paths →</button><div class="path-result hidden" id="careerResult" aria-live="polite"></div></div><div class="safety"><strong>Keep your options open.</strong><p>Subjects and entry requirements differ between courses. Check with a teacher or career adviser before making school subject choices.</p></div></section>`;
+    }
+
+    function confidenceView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Build self-trust, one moment at a time</div><h1>Confidence Builder</h1><p>Confidence doesn't mean never feeling nervous. It can mean trying while nervous, or asking for support.</p></div><div class="panel"><div class="eyebrow">Choose a reminder for today</div><div class="prompt-list" style="margin-top:13px"><button data-affirmation="I can take this one step at a time.">I can take this one step at a time.</button><button data-affirmation="I am allowed to ask questions.">I am allowed to ask questions.</button><button data-affirmation="My no deserves respect.">My no deserves respect.</button><button data-affirmation="One difficult day doesn't define me.">One difficult day doesn't define me.</button></div><p id="affirmationResult" class="path-result hidden" aria-live="polite"></p></div><div class="panel" style="margin-top:14px"><div class="eyebrow">Notice your strengths</div><h2 style="font-size:24px;margin:6px 0">What is one thing you handled this week?</h2><div class="field"><label for="strengthNote">Keep it private; this stays on screen only.</label><textarea id="strengthNote" maxlength="240" placeholder="It can be something small, like showing up or asking for help."></textarea></div><button class="btn" id="saveStrength">Save this reflection for now</button></div></section>`;
+    }
+
+    function relationshipsView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Respect goes both ways</div><h1>Relationship Education</h1><p>Healthy relationships leave room for both people to feel safe, heard, and free to say no.</p></div><div class="choice-grid"><article class="scenario"><div class="eyebrow">BOUNDARIES</div><h2>Your comfort matters</h2><p>You can change your mind. You do not have to share a password, private photo, or anything that makes you uncomfortable to prove you care.</p></article><article class="scenario"><div class="eyebrow">COMMUNICATION</div><h2>Say what you mean kindly</h2><p>Try naming what happened, how you feel, and what you need. Listen to the other person too, without threats or pressure.</p></article><article class="scenario"><div class="eyebrow">ASKING SOMEONE OUT</div><h2>Keep it simple and low-pressure</h2><p>“I like talking with you. Would you like to hang out sometime? It's okay if not.” Ask privately, respect their answer, and give them space.</p></article><article class="scenario"><div class="eyebrow">RED FLAGS</div><h2>Get support if you feel unsafe</h2><p>Threats, controlling who you see, pressure, or unwanted touching are not signs of love. Tell a trusted adult or counsellor. If in immediate danger, call 112.</p></article></div></section>`;
+    }
+
+    function askView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">No judgement, start where you are</div><h1>Ask Without Fear</h1><p>Choose a topic for a gentle starting point. This demo does not send or store your question, and it is not a counsellor.</p></div><div class="panel"><div class="prompt-list"><button data-question="feelings">I'm feeling overwhelmed</button><button data-question="friends">I'm having a problem with friends</button><button data-question="school">I'm stuck with school work</button><button data-question="relationship">I like someone and feel nervous</button></div><div class="field" style="margin-top:17px"><label for="askText">Or write a question without names or private details</label><textarea id="askText" maxlength="300" placeholder="What would you like help thinking through?"></textarea></div><button class="btn" id="askBtn">Get a starting point</button><div class="path-result hidden" id="askResult" aria-live="polite"></div></div><div class="safety"><strong>Need help with something urgent or unsafe?</strong><p>This demo can't monitor messages or provide emergency support. Tell a trusted adult. In South Africa, Childline is available on 116; if you are in immediate danger, call 112.</p></div></section>`;
+    }
+
+    function learnHubView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Learn and explore</div><h1>Learning space</h1><p>Get study support, think through a situation, or explore a story.</p></div><div class="feature-grid hub-grid"><button class="feature" data-go="study"><span class="feature-icon">📚</span><strong>Study help</strong><span>Break a tricky topic into small steps.</span></button><button class="feature" data-go="choices"><span class="feature-icon">◇</span><strong>Think it through</strong><span>Practise choices in everyday situations.</span></button><button class="feature" data-go="stories"><span class="feature-icon">▱</span><strong>Stories</strong><span>See things from different angles.</span></button></div></section>`;
+    }
+
+    function wellbeingHubView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">Take care of yourself</div><h1>Wellbeing</h1><p>Choose one small thing that feels helpful right now.</p></div><div class="feature-grid hub-grid"><button class="feature" data-go="reset"><span class="feature-icon">◌</span><strong>Take a reset</strong><span>Breathing and grounding tools.</span></button><button class="feature" data-go="lifeSkills"><span class="feature-icon">✳</span><strong>Life skills</strong><span>Build a balanced routine at your pace.</span></button><button class="feature" data-go="confidence"><span class="feature-icon">★</span><strong>Confidence</strong><span>Notice your strengths and practise self-trust.</span></button></div><div class="safety"><strong>You don’t have to manage a hard moment alone.</strong><p>Try talking to a trusted adult or school counsellor. In South Africa, call Childline on 116; if you are in immediate danger, call 112.</p></div></section>`;
+    }
+
+    function moreHubView() {
+      return `<section class="view"><div class="page-title"><div class="eyebrow">More for your journey</div><h1>More</h1><p>Progress, connection, future ideas, relationships, and private settings.</p></div><div class="feature-grid hub-grid"><button class="feature" data-go="progress"><span class="feature-icon">▥</span><strong>Your progress</strong><span>See the small steps you’ve taken today.</span></button><button class="feature" data-go="connect"><span class="feature-icon">◎</span><strong>Find your people</strong><span>Explore interest circles and connection safety.</span></button><button class="feature" data-go="career"><span class="feature-icon">⌁</span><strong>Career discovery</strong><span>Explore paths that might fit your interests.</span></button><button class="feature" data-go="relationships"><span class="feature-icon">♡</span><strong>Relationships</strong><span>Learn about respect and boundaries.</span></button><button class="feature" data-go="ask"><span class="feature-icon">?</span><strong>Ask without fear</strong><span>Get a gentle starting point for a question.</span></button><button class="feature" type="button" data-open-profile-settings><span class="feature-icon">⚙</span><strong>Profile & settings</strong><span>Change your profile and preferences.</span></button></div></section>`;
+    }
+
+    const views = { home: homeView, learnHub: learnHubView, wellbeingHub: wellbeingHubView, moreHub: moreHubView, progress: progressView, reset: resetView, study: studyView, choices: choicesView, stories: storiesView, connect: connectView, pulsechat: pulseChatView, lifeSkills: lifeSkillsView, career: careerView, confidence: confidenceView, relationships: relationshipsView, ask: askView };
+
+    function renderView(view, options = {}) {
+      if (!views[view]) return;
+      if (breathingTimer) stopBreathing();
+      if (!options.fromBack && activeView && activeView !== view) viewHistory.push(activeView);
+      activeView = view;
+      renderNav();
+      updateBackButton();
+      content.innerHTML = views[view]();
+      bindViewActions();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function bindViewActions() {
+      content.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => renderView(button.dataset.go)));
+      content.querySelectorAll("[data-open-profile-settings]").forEach(button => button.addEventListener("click", openProfileSettings));
+      content.querySelectorAll("[data-mood]").forEach(button => button.addEventListener("click", () => {
+        content.querySelectorAll("[data-mood]").forEach(item => item.classList.remove("selected"));
+        button.classList.add("selected");
+        showToast(`Thanks for checking in: ${button.dataset.mood.toLowerCase()}.`);
+      }));
+      const breathOrb = document.getElementById("breathOrb");
+      if (breathOrb) breathOrb.addEventListener("click", () => {
+        if (breathingTimer) stopBreathing();
+        else startBreathing();
+      });
+      const groundDone = document.getElementById("groundDone");
+      if (groundDone) groundDone.addEventListener("click", () => showToast("Good job taking a moment. You can ask someone you trust for support too."));
+      const explainBtn = document.getElementById("explainBtn");
+      if (explainBtn) explainBtn.addEventListener("click", buildLesson);
+      content.querySelectorAll("[data-answer]").forEach(button => button.addEventListener("click", () => {
+        document.getElementById("quizFeedback").textContent = button.dataset.answer === "right" ? "Exactly. One small idea is a good place to begin." : "Try again: smaller steps usually make a big topic easier.";
+      }));
+      content.querySelectorAll("[data-pulse-channel]").forEach(button => button.addEventListener("click", () => {
+        activePulseChannel = button.dataset.pulseChannel;
+        renderView("pulsechat");
+      }));
+      content.querySelectorAll("[data-pulse-report]").forEach(button => button.addEventListener("click", () => {
+        showToast("Report preview only—no moderators are connected. Live PulseChat must launch with reporting and trained staff.");
+      }));
+      content.querySelectorAll("[data-pulse-block]").forEach(button => button.addEventListener("click", () => {
+        blockedPulseDemoSenders.add(button.dataset.pulseBlock);
+        renderView("pulsechat");
+        showToast("Demo messages hidden for this session. No real account was blocked.");
+      }));
+      const pulseChatForm = document.getElementById("pulseChatForm");
+      if (pulseChatForm) pulseChatForm.addEventListener("submit", event => {
+        event.preventDefault();
+        const input = document.getElementById("pulseChatInput");
+        const feedback = document.getElementById("pulseChatFeedback");
+        const text = input.value.trim();
+        if (!text) return;
+        const includesContactDetails = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(text) || /\+?\d[\d\s().-]{7,}\d/.test(text);
+        if (includesContactDetails) {
+          feedback.textContent = "For your privacy, don’t share phone numbers or email addresses here. Remove them and try again.";
+          return;
+        }
+        pulseUserMessages.push({
+          channelId: activePulseChannel,
+          sender: `${profile.name || "You"} (preview)`,
+          text,
+          time: new Intl.DateTimeFormat("en-ZA", { hour: "2-digit", minute: "2-digit" }).format(new Date())
+        });
+        renderView("pulsechat");
+        const newInput = document.getElementById("pulseChatInput");
+        newInput.focus();
+        document.getElementById("pulseChatMessages").scrollTop = document.getElementById("pulseChatMessages").scrollHeight;
+      });
+      content.querySelectorAll("[data-scenario]").forEach(button => button.addEventListener("click", () => showChoiceFeedback(button)));
+      content.querySelectorAll("[data-story]").forEach(button => button.addEventListener("click", () => showStory(button.dataset.story)));
+      content.querySelectorAll(".join-circle").forEach(button => button.addEventListener("click", () => showToast("This demo does not connect to real people yet.")));
+      const circleInfo = document.getElementById("circleInfo");
+      if (circleInfo) circleInfo.addEventListener("click", () => showToast("In a real app, circles need trained moderators and easy reporting."));
+      content.querySelectorAll(".habit-check").forEach(input => input.addEventListener("change", () => { if (input.checked) { progress.habits += 1; showToast("A small step, at your pace."); } }));
+      const careerBtn = document.getElementById("careerBtn");
+      if (careerBtn) careerBtn.addEventListener("click", showCareerPaths);
+      content.querySelectorAll("[data-affirmation]").forEach(button => button.addEventListener("click", () => {
+        progress.confidence += 1;
+        const result = document.getElementById("affirmationResult");
+        result.textContent = button.dataset.affirmation;
+        result.classList.remove("hidden");
+      }));
+      const saveStrength = document.getElementById("saveStrength");
+      if (saveStrength) saveStrength.addEventListener("click", () => {
+        const note = document.getElementById("strengthNote").value.trim();
+        if (!note) return showToast("Add a small moment first, or leave this blank.");
+        progress.confidence += 1;
+        showToast("Saved on this screen only. It will not be kept after you leave.");
+      });
+      content.querySelectorAll("[data-question]").forEach(button => button.addEventListener("click", () => answerQuestion(button.dataset.question)));
+      const askBtn = document.getElementById("askBtn");
+      if (askBtn) askBtn.addEventListener("click", () => {
+        const question = document.getElementById("askText").value.trim().toLowerCase();
+        const topic = question.includes("school") || question.includes("homework") ? "school" : question.includes("friend") ? "friends" : question.includes("like") || question.includes("date") ? "relationship" : "feelings";
+        answerQuestion(topic);
+      });
+    }
+
+    function openProfileSettings() {
+      document.getElementById("settingsNickname").value = profile.name;
+      document.getElementById("settingsEmail").value = profile.email || "";
+      document.getElementById("settingsProfileName").textContent = profile.name || "My space";
+      document.getElementById("settingsProfileEmail").textContent = profile.email || "Email not added";
+      document.getElementById("settingsAvatar").textContent = (profile.name || "M").charAt(0).toUpperCase();
+      document.getElementById("languageSetting").value = settingsPreferences.language;
+      document.getElementById("voiceSetting").value = settingsPreferences.voice;
+      document.getElementById("locationSetting").checked = settingsPreferences.location;
+      document.getElementById("notificationSetting").checked = settingsPreferences.notifications;
+      updateSettingStatus("locationSetting", "locationStatus", settingsPreferences.location);
+      updateSettingStatus("notificationSetting", "notificationStatus", settingsPreferences.notifications);
+      document.body.dataset.appearance = settingsPreferences.appearance;
+      document.body.dataset.theme = settingsPreferences.theme;
+      document.querySelectorAll("[data-appearance-mode]").forEach(button => button.classList.toggle("active", button.dataset.appearanceMode === settingsPreferences.appearance));
+      document.querySelectorAll(".theme-choice").forEach(button => {
+        const selected = button.dataset.theme === settingsPreferences.theme;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
+      document.getElementById("peerPreferences").innerHTML = peerGroups.map(group => `<label class="peer-preference"><input type="checkbox" name="peerGroup" value="${group.id}" ${selectedPeerGroups.includes(group.id) ? "checked" : ""}><span><strong>${group.name}</strong><small>${group.description}</small></span></label>`).join("");
+      document.getElementById("profileDialog").showModal();
+      document.getElementById("settingsNickname").focus();
+    }
+
+    function updateSettingStatus(inputId, statusId, enabled) {
+      const input = document.getElementById(inputId);
+      const status = document.getElementById(statusId);
+      input.setAttribute("aria-checked", String(enabled));
+      status.textContent = enabled ? "● Enabled" : "● Off";
+    }
+
+    function setAppearance(mode) {
+      settingsPreferences.appearance = mode;
+      document.body.dataset.appearance = mode;
+      document.querySelectorAll("[data-appearance-mode]").forEach(button => button.classList.toggle("active", button.dataset.appearanceMode === mode));
+    }
+
+    function setTheme(theme) {
+      settingsPreferences.theme = theme;
+      document.body.dataset.theme = theme;
+      document.querySelectorAll(".theme-choice").forEach(button => {
+        const selected = button.dataset.theme === theme;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
+    }
+
+    function signOut() {
+      stopBreathing();
+      clearTimeout(storyTimer);
+      confirmationReturnToApp = false;
+      viewHistory.length = 0;
+      activeView = null;
+      pulseUserMessages = [];
+      blockedPulseDemoSenders.clear();
+      activePulseChannel = "study";
+      document.getElementById("profileDialog").close();
+      appShell.classList.add("hidden");
+      confirmationScreen.classList.add("hidden");
+      authScreen.classList.remove("hidden");
+      document.getElementById("authForm").reset();
+      setAuthMode("create");
+    }
+
+    function closeProfileSettings() {
+      document.getElementById("profileDialog").close();
+    }
+
+    function startBreathing() {
+      const orb = document.getElementById("breathOrb");
+      const text = document.getElementById("breathText");
+      if (!orb || breathingTimer) return;
+      orb.setAttribute("aria-label", "Stop breathing exercise");
+      orb.setAttribute("aria-pressed", "true");
+      const phases = [{ label: "Breathe in", duration: 4000, expand: true }, { label: "Breathe out", duration: 6000, expand: false }];
+      let phaseIndex = 0;
+      const tick = () => {
+        const phase = phases[phaseIndex];
+        orb.textContent = phase.label;
+        orb.classList.toggle("breathing", phase.expand);
+        text.textContent = "Follow only if it feels comfortable. Let your breath stay natural.";
+        phaseIndex = (phaseIndex + 1) % phases.length;
+        breathingTimer = setTimeout(tick, phase.duration);
+      };
+      tick();
+    }
+
+    function stopBreathing() {
+      clearTimeout(breathingTimer);
+      breathingTimer = null;
+      const orb = document.getElementById("breathOrb");
+      const text = document.getElementById("breathText");
+      if (orb) {
+        orb.textContent = "Ready?";
+        orb.classList.remove("breathing");
+        orb.setAttribute("aria-label", "Start breathing exercise");
+        orb.setAttribute("aria-pressed", "false");
+      }
+      if (text) text.textContent = "Tap the circle to begin. Tap it again to stop. Keep your breath comfortable.";
+    }
+
+    function buildLesson() {
+      const subject = document.getElementById("subject").value;
+      const topic = document.getElementById("topic").value.trim();
+      const notes = document.getElementById("notes").value.trim();
+      const result = document.getElementById("studyResult");
+      const idea = topic || (notes ? notes.split(/[.!?\n]/)[0].slice(0, 90) : "your topic");
+      progress.lessons += 1;
+      result.innerHTML = `<div class="eyebrow">${escapeHtml(subject)} · starter lesson</div><h3>Let's unpack ${escapeHtml(idea)}.</h3><div class="lesson-step"><span class="step-num">1</span><div><strong>Start with what it means</strong><div class="muted">Write down the key idea in your own words. Circle any word you would like explained first.</div></div></div><div class="lesson-step"><span class="step-num">2</span><div><strong>Connect one example</strong><div class="muted">Find one worked example in your textbook or class notes. Follow one step at a time and ask what changed at each step.</div></div></div><div class="lesson-step"><span class="step-num">3</span><div><strong>Try it without looking</strong><div class="muted">Explain the idea out loud, or solve one similar question. Check your notes after you have tried.</div></div></div>${notes ? `<div class="quiz-box"><strong>Your notes, made shorter</strong><p style="margin:7px 0 0">${escapeHtml(summarize(notes))}</p><p class="small-print" style="margin:7px 0 0">A quick draft, not a replacement for checking your class notes.</p></div>` : ""}<div class="quiz-box"><strong>Mini check</strong><p style="margin:7px 0 0">Can you describe the first step for ${escapeHtml(idea)} without looking at your notes?</p><div class="quiz-options"><button id="miniYes">I can explain it</button><button id="miniPractice">I need another example</button></div><p class="small-print" id="miniFeedback" aria-live="polite" style="margin:8px 0 0"></p></div>`;
+      result.classList.remove("hidden");
+      result.querySelectorAll(".quiz-options button").forEach(button => button.addEventListener("click", () => {
+        const feedback = document.getElementById("miniFeedback");
+        feedback.textContent = button.id === "miniYes" ? "Nice work. Try another question to check it sticks." : "That's useful to know. Ask a teacher or classmate for one more worked example.";
+      }));
+      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function summarize(text) {
+      const sentences = text.split(/(?<=[.!?])\s+/).filter(Boolean);
+      if (sentences.length <= 2) return sentences.join(" ");
+      return `${sentences.slice(0, 2).join(" ")} Key words: ${[...new Set(text.match(/\b[A-Za-z]{7,}\b/g) || [])].slice(0, 5).join(", ") || "review the main terms"}.`;
+    }
+
+    function showCareerPaths() {
+      const paths = {
+        people: "You might explore teaching, nursing, community work, coaching, or hospitality. Notice which kind of helping feels meaningful to you.",
+        build: "You might explore engineering, construction, plumbing, electrical work, agriculture, or environmental work. Practical subjects and hands-on projects can help you learn what fits.",
+        create: "You might explore graphic design, film, writing, fashion, architecture, or digital media. Try a small project and see which part you enjoy most.",
+        solve: "You might explore science, finance, data, medicine, coding, or research. Puzzles and class projects can help you discover which questions keep you curious."
+      };
+      const result = document.getElementById("careerResult");
+      result.textContent = paths[document.getElementById("careerInterest").value];
+      result.classList.remove("hidden");
+    }
+
+    function answerQuestion(topic) {
+      const responses = {
+        feelings: "Pause for one slow breath if that feels okay. Name one thing you can see and one person you trust. You don't have to handle a heavy feeling alone; a trusted adult or school counsellor can listen.",
+        friends: "Before replying, pause and think about what you need from the situation. A calm conversation in a safer place may help. If there are threats or a fight might happen, get distance and tell a trusted adult.",
+        school: "Choose one question or instruction that feels confusing. Try an example from your notes, then ask a teacher or classmate to explain the first step. You can use Study Help to break a topic down.",
+        relationship: "It's okay to feel nervous. Keep your invitation private, kind, and easy to decline. Respect their answer, including a no or no reply; you deserve the same respect too."
+      };
+      const result = document.getElementById("askResult");
+      result.textContent = responses[topic] || responses.feelings;
+      result.classList.remove("hidden");
+    }
+
+    function showChoiceFeedback(button) {
+      const scenarioIndex = Number(button.dataset.scenario);
+      const scenario = [
+        { answer: 1, feedback: "A pause protects everyone. Checking in privately and bringing in a trusted adult can help without adding fuel or putting you in danger." },
+        { answer: 1, feedback: "You don't owe anyone a long explanation. A clear no and a plan to leave can make it easier to stick with what feels right." }
+      ][scenarioIndex];
+      const feedback = document.getElementById(`choiceFeedback${scenarioIndex}`);
+      feedback.textContent = Number(button.dataset.option) === scenario.answer ? scenario.feedback : "Pause for a second: what might happen next, and is there a safer way to protect yourself or someone else?";
+      feedback.classList.remove("hidden");
+      progress.choices += 1;
+    }
+
+    function showStory(index) {
+      const stories = [
+        { title: "When your mind won't switch off", text: "Thandi has three assignments due and feels like she is failing at all of them. She takes a minute to settle, then tells her older cousin what is going on. Together they write down the next deadline and choose one small task for tonight. The other work is still there, but it no longer has to be solved all at once." },
+        { title: "More than one way to be strong", text: "At practice, someone shoves Sipho after a heated argument. His friends expect him to hit back. Sipho steps away and asks the coach to help sort out what happened. It is not pretending the shove was okay; it is choosing a response that does not make the harm bigger." },
+        { title: "Asking someone out, respectfully", text: "Lebo likes someone in his class. Instead of making it a big public moment, he asks privately: 'I like talking with you. Would you like to hang out sometime? It's completely okay if not.' They say no. Lebo feels disappointed, but thanks them for being honest and gives them space. A no is an answer, not a challenge." },
+        { title: "Small actions, shared change", text: "A group of learners notices the water tap near their classroom keeps leaking. They tell a teacher and ask where a repair request should go. One learner takes notes, another follows up. The repair takes time, but the learners see that noticing a problem and asking for help can be a real first step." }
+      ];
+      const story = stories[Number(index)];
+      content.insertAdjacentHTML("beforeend", `<div class="story-overlay" role="dialog" aria-modal="true" aria-label="${escapeHtml(story.title)}" style="position:fixed;inset:0;background:rgba(8,20,38,.62);z-index:4;display:grid;place-items:center;padding:20px"><article class="panel" style="width:min(100%,560px);max-height:85vh;overflow:auto"><button class="btn secondary" data-close-story style="float:right" aria-label="Close story">Close</button><div class="eyebrow">A short story</div><h2 style="font-size:30px;margin:12px 0">${escapeHtml(story.title)}</h2><p class="muted" style="line-height:1.8">${escapeHtml(story.text)}</p><p style="margin:0"><strong>Think about it:</strong> What other safe next step might have helped?</p></article></div>`);
+      content.querySelector("[data-close-story]").addEventListener("click", () => content.querySelector(".story-overlay").remove());
+      content.querySelector(".story-overlay").addEventListener("click", event => { if (event.target.classList.contains("story-overlay")) event.target.remove(); });
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    }
+
+    document.getElementById("createTab").addEventListener("click", () => setAuthMode("create"));
+    document.getElementById("loginTab").addEventListener("click", () => setAuthMode("login"));
+    document.getElementById("profileSettingsBtn").addEventListener("click", openProfileSettings);
+    document.getElementById("appBackBtn").addEventListener("click", goBack);
+    document.getElementById("settingsBack").addEventListener("click", closeProfileSettings);
+    document.getElementById("closeProfileDialog").addEventListener("click", closeProfileSettings);
+    document.getElementById("cancelProfileSettings").addEventListener("click", closeProfileSettings);
+    document.getElementById("whatsappLink").addEventListener("click", () => showToast("Toqi WhatsApp isn't connected in this demo."));
+    document.querySelectorAll("[data-appearance-mode]").forEach(button => button.addEventListener("click", () => setAppearance(button.dataset.appearanceMode)));
+    document.querySelectorAll(".theme-choice").forEach(button => button.addEventListener("click", () => setTheme(button.dataset.theme)));
+    document.getElementById("locationSetting").addEventListener("change", event => {
+      settingsPreferences.location = event.target.checked;
+      updateSettingStatus("locationSetting", "locationStatus", settingsPreferences.location);
+    });
+    document.getElementById("notificationSetting").addEventListener("change", event => {
+      settingsPreferences.notifications = event.target.checked;
+      updateSettingStatus("notificationSetting", "notificationStatus", settingsPreferences.notifications);
+    });
+    document.getElementById("languageSetting").addEventListener("change", event => { settingsPreferences.language = event.target.value; });
+    document.getElementById("voiceSetting").addEventListener("change", event => { settingsPreferences.voice = event.target.value; });
+    document.getElementById("replayOnboarding").addEventListener("click", () => {
+      closeProfileSettings();
+      startConfirmation(true);
+    });
+    document.getElementById("privacyPolicy").addEventListener("click", () => showToast("This prototype does not store or send your profile data."));
+    document.getElementById("accountManagement").addEventListener("click", () => {
+      if (!window.confirm("Clear this demo profile and end your session? No server account exists.")) return;
+      profile = { name: "", age: "", email: "" };
+      selectedPeerGroups = peerGroups.map(group => group.id);
+      settingsPreferences.appearance = "light";
+      settingsPreferences.theme = "legendary";
+      settingsPreferences.language = "English";
+      settingsPreferences.location = false;
+      settingsPreferences.notifications = false;
+      settingsPreferences.voice = "Warm";
+      document.body.dataset.appearance = "light";
+      document.body.dataset.theme = "legendary";
+      signOut();
+    });
+    document.getElementById("settingsSignOut").addEventListener("click", signOut);
+    document.getElementById("profileSettingsForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const nickname = document.getElementById("settingsNickname").value.trim();
+      if (!nickname) return;
+      profile.name = nickname;
+      profile.email = document.getElementById("settingsEmail").value.trim();
+      selectedPeerGroups = Array.from(document.querySelectorAll("#peerPreferences input[name='peerGroup']:checked"), input => input.value);
+      document.querySelectorAll(".user-name").forEach(element => element.textContent = profile.name);
+      document.querySelectorAll(".user-initial").forEach(element => element.textContent = profile.name.charAt(0).toUpperCase());
+      const welcomeHeading = content.querySelector(".welcome h1");
+      if (welcomeHeading) welcomeHeading.textContent = `Hey, ${profile.name}.`;
+      document.getElementById("settingsProfileName").textContent = profile.name;
+      document.getElementById("settingsProfileEmail").textContent = profile.email || "Email not added";
+      document.getElementById("settingsAvatar").textContent = profile.name.charAt(0).toUpperCase();
+      closeProfileSettings();
+      if (activeView === "connect") renderView("connect");
+      showToast("Your profile and demo preferences are updated for this session.");
+    });
+    function setAuthMode(mode) {
+      authMode = mode;
+      const create = mode === "create";
+      document.getElementById("createTab").classList.toggle("active", create);
+      document.getElementById("createTab").setAttribute("aria-selected", String(create));
+      document.getElementById("loginTab").classList.toggle("active", !create);
+      document.getElementById("loginTab").setAttribute("aria-selected", String(!create));
+      document.getElementById("nameField").classList.toggle("hidden", !create);
+      document.getElementById("ageField").classList.toggle("hidden", !create);
+      document.getElementById("nickname").required = create;
+      document.getElementById("ageBand").required = create;
+      document.getElementById("authTitle").textContent = create ? "Welcome to NextpulseZA" : "Welcome back";
+      document.getElementById("authIntro").textContent = create ? "Start with a nickname. This demo keeps your details only in this browser session." : "This is a demo sign-in. Enter a nickname to continue; no real account is checked.";
+      document.getElementById("authSubmit").innerHTML = create ? 'Enter NextpulseZA <span aria-hidden="true">→</span>' : 'Continue to demo <span aria-hidden="true">→</span>';
+    }
+
+    function renderConfirmationStory() {
+      const story = confirmationStories[storyIndex];
+      document.getElementById("confirmationStory").innerHTML = `<div class="story-illustration" aria-hidden="true">${story.icon}</div><div class="eyebrow">A tiny story · ${storyIndex + 1} of ${confirmationStories.length}</div><h2>${story.title}</h2><p>${story.text}</p>`;
+      document.getElementById("storyProgress").innerHTML = confirmationStories.map((_, index) => `<span class="${index <= storyIndex ? "active" : ""}"></span>`).join("");
+      const lastStory = storyIndex === confirmationStories.length - 1;
+      document.getElementById("nextStory").innerHTML = lastStory ? 'Open my space <span aria-hidden="true">→</span>' : 'Next <span aria-hidden="true">→</span>';
+      if (lastStory) document.getElementById("confirmationStatus").textContent = "Your demo profile is ready";
+    }
+
+    function showNextConfirmationStory() {
+      clearTimeout(storyTimer);
+      if (storyIndex < confirmationStories.length - 1) {
+        storyIndex += 1;
+        renderConfirmationStory();
+        if (storyIndex < confirmationStories.length - 1) {
+          storyTimer = setTimeout(showNextConfirmationStory, 6500);
+        }
+      } else {
+        enterApp();
+      }
+    }
+
+    function startConfirmation(returnToApp = false) {
+      confirmationReturnToApp = returnToApp;
+      storyIndex = 0;
+      document.getElementById("confirmationName").textContent = profile.name;
+      document.getElementById("confirmationStatus").textContent = "Preparing your demo profile…";
+      authScreen.classList.add("hidden");
+      appShell.classList.add("hidden");
+      confirmationScreen.classList.remove("hidden");
+      renderConfirmationStory();
+      storyTimer = setTimeout(showNextConfirmationStory, 6500);
+    }
+
+    function backFromConfirmation() {
+      clearTimeout(storyTimer);
+      confirmationScreen.classList.add("hidden");
+      if (confirmationReturnToApp) {
+        appShell.classList.remove("hidden");
+      } else {
+        authScreen.classList.remove("hidden");
+      }
+      confirmationReturnToApp = false;
+    }
+
+    function enterApp() {
+      clearTimeout(storyTimer);
+      const returnToApp = confirmationReturnToApp;
+      confirmationReturnToApp = false;
+      confirmationScreen.classList.add("hidden");
+      if (returnToApp) {
+        appShell.classList.remove("hidden");
+        return;
+      }
+      viewHistory.length = 0;
+      activeView = null;
+      authScreen.classList.add("hidden");
+      appShell.classList.remove("hidden");
+      document.querySelectorAll(".user-name").forEach(element => element.textContent = profile.name);
+      document.querySelectorAll(".user-initial").forEach(element => element.textContent = profile.name.charAt(0).toUpperCase());
+      document.getElementById("todayDate").textContent = new Intl.DateTimeFormat("en-ZA", { weekday: "long", day: "numeric", month: "long" }).format(new Date());
+      renderView("home");
+    }
+
+    document.getElementById("googleSignIn").addEventListener("click", () => {
+      showToast("Google sign-in isn't connected in this demo. Secure Google login needs app and server setup.");
+    });
+    document.getElementById("nextStory").addEventListener("click", showNextConfirmationStory);
+    document.getElementById("skipStory").addEventListener("click", enterApp);
+    document.getElementById("confirmationBack").addEventListener("click", backFromConfirmation);
+
+    document.getElementById("authForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const nickname = document.getElementById("nickname").value.trim();
+      const age = document.getElementById("ageBand").value;
+      if (authMode === "create" && (!age || !nickname)) return;
+      profile = { name: nickname || "Friend", age, email: document.getElementById("email").value.trim() };
+      if (authMode === "create") {
+        startConfirmation();
+      } else {
+        enterApp();
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      signOut();
+    });
+  </script>
+</body>
+</html>
